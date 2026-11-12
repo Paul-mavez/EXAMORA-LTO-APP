@@ -1,0 +1,6 @@
+{
+  "name": "Examora - LTO reviewer",
+  "description": "Learn. Prepare. Drive with Confidence. An offline-first Philippine driver's license theoretical examination reviewer by EXAMORA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,24 @@
+<resources>
+    <string name="brand_parent">EXAMORA</string>
+    <string name="app_name">Examora - LTO reviewer</string>
+    <string name="tagline">Matuto. Maghanda. Magmaneho nang may Kumpiyansa.</string>
+    <string name="lto_disclaimer">Ang Examora - LTO reviewer ay isang malayang aplikasyong pang-edukasyon at hindi kaakibat o ineendorso ng Land Transportation Office (LTO).</string>
+
+    <string name="onboard_title_1">Paghahanda para sa Pagsusulit sa Pagmamaneho</string>
+    <string name="onboard_desc_1">Pag-aralan ang mga araling nakabatay sa LTO Driver\'s Manual nang offline at walang kailangang account.</string>
+    <string name="onboard_title_2">Alamin ang Batas Trapiko at Road Signs</string>
+    <string name="onboard_desc_2">Unawain ang mga regulatory signs, warning signs, guide signs, marka sa kalsada, at ilaw-trapiko.</string>
+    <string name="onboard_title_3">Magpraktis at Subukin ang Kaalaman</string>
+    <string name="onboard_desc_3">Patatagin ang kaalaman gamit ang practice questions at may-oras na mock examination.</string>
+    <string name="onboard_title_4">Subaybayan ang Iyong Progreso</string>
+    <string name="onboard_desc_4">Tukuyin ang mga paksang kailangang pagtuunan at mag-save ng sariling tala sa iyong device.</string>
+
+    <string name="home_greeting">Handa ka na bang maghanda para sa iyong pagsusulit sa pagmamaneho?</string>
+    <string name="home_supporting">Palawakin ang iyong kaalaman nang paisa-isang aralin.</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_learn">Aralin</string>
+    <string name="nav_practice">Praktis</string>
+    <string name="nav_mock_exam">Mock Exam</string>
+    <string name="nav_profile">Profile</string>
+</resources>
