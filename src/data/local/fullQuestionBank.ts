@@ -773,101 +773,109 @@ export function getEnglishQuestions(): ReviewerQuestion[] {
 export function getTrafficSignsQuestions(): ReviewerQuestion[] {
   const signQuestions: RawQ[] = [];
 
-  // Core high-priority sign questions
+  // Core high-priority sign questions (Concise prompts & choices matching IMG_4114_2)
   const coreSignQs: RawQ[] = [
     {
-      q: 'What does an octagonal red regulatory sign with bold white "STOP" lettering require you to do?',
-      correct: 'Come to a complete full stop before the stop line or crosswalk and yield before proceeding',
-      wrong1: 'Slow down and roll through if no police officer is present',
-      wrong2: 'Stop only if you are driving a truck or bus',
-      exp: 'The octagonal red Stop sign (DPWH R1-1) commands a complete cessation of forward movement before the stop line.',
+      q: 'What should drivers watch for after this sign?',
+      correct: 'Animals crossing',
+      wrong1: 'Farm equipment',
+      wrong2: 'Construction vehicles',
+      exp: 'This red-bordered warning triangle with a cattle silhouette (DPWH W6-5) alerts drivers to slow down and watch for livestock or animals crossing the roadway ahead.',
+      img: '/assets/png/signs/warn_animals_crossing.png',
+    },
+    {
+      q: 'What does this octagonal red road sign require drivers to do?',
+      correct: 'Come to a complete stop',
+      wrong1: 'Slow down and proceed',
+      wrong2: 'Speed up through the intersection',
+      exp: 'The octagonal red Stop sign (DPWH R1-1) commands a complete full stop before the stop line or crosswalk and yielding before proceeding.',
       img: '/assets/png/signs/reg_stop.png',
     },
     {
-      q: 'What does a downward-pointing white triangle with a thick red border ("GIVE WAY") indicate?',
-      correct: 'Slow down, prepare to stop if needed, and yield the right-of-way to traffic on the priority road',
-      wrong1: 'You have absolute right-of-way over intersecting vehicles',
-      wrong2: 'Road closed to all motor vehicles ahead',
-      exp: 'The inverted triangle (DPWH R1-2) is the international and Philippine standard shape for Give Way / Yield.',
+      q: 'What does this inverted red-and-white triangle sign indicate?',
+      correct: 'Give way / Yield to priority traffic',
+      wrong1: 'You have absolute right-of-way',
+      wrong2: 'Two-way traffic ahead',
+      exp: 'The inverted triangle (DPWH R1-2) requires drivers to slow down, prepare to stop if needed, and yield the right-of-way to traffic on the priority road.',
       img: '/assets/png/signs/reg_give_way.png',
     },
     {
-      q: 'What does a solid red circular sign with a horizontal white bar across the center mean?',
-      correct: 'NO ENTRY — all vehicles are strictly prohibited from entering from this direction',
-      wrong1: 'Toll booth ahead — prepare exact change',
-      wrong2: 'Dead-end street for trucks only',
-      exp: 'DPWH R2-3 No Entry prohibits all vehicular entry, preventing counterflow collisions on one-way streets and ramps.',
+      q: 'What does this red circular sign with a white horizontal bar mean?',
+      correct: 'No entry for all vehicles',
+      wrong1: 'Toll booth ahead',
+      wrong2: 'Dead-end street ahead',
+      exp: 'DPWH R2-3 No Entry prohibits all vehicular entry from this direction to prevent counterflow collisions.',
       img: '/assets/png/signs/reg_no_entry.png',
     },
     {
-      q: 'What does a yellow criss-cross box painted across the road surface of a 4-way intersection indicate?',
-      correct: 'YELLOW BOX JUNCTION — never enter the box unless your exit lane is completely clear to avoid blocking the intersection',
-      wrong1: 'Designated loading and unloading zone for public utility jeepneys',
-      wrong2: 'Pedestrian-only plaza where cars are banned at all times',
-      exp: 'Even when the traffic light is green, you must not enter a Yellow Box Junction if traffic ahead will trap your vehicle inside the box.',
+      q: 'What does this yellow criss-cross box painted in an intersection mean?',
+      correct: 'Do not enter unless your exit is clear',
+      wrong1: 'Jeepney loading and unloading zone',
+      wrong2: 'Pedestrian-only crossing plaza',
+      exp: 'In a Yellow Box Junction, you must never enter the box unless your exit lane is completely clear, even if the traffic light is green.',
       img: '/assets/png/signs/mark_yellow_box.png',
     },
     {
-      q: 'What does a circular white sign with a red border displaying the number "60" indicate?',
-      correct: 'Maximum legal speed limit is 60 km/h under ideal road and weather conditions',
-      wrong1: 'Minimum required speed is 60 km/h',
-      wrong2: 'Next city is 60 kilometers away',
-      exp: 'Red-bordered circular numerical signs (DPWH R4-1) establish the maximum lawful speed limit for that road section.',
+      q: 'What does this circular sign displaying "60" indicate?',
+      correct: 'Maximum speed limit of 60 km/h',
+      wrong1: 'Minimum speed of 60 km/h',
+      wrong2: 'Next city is 60 km away',
+      exp: 'Red-bordered circular numerical signs (DPWH R4-1) establish the maximum legal speed limit for that road section.',
       img: '/assets/png/signs/reg_speed_60.png',
     },
     {
-      q: 'What does a blue circular regulatory sign displaying a white passenger silhouette wearing a seatbelt signify?',
-      correct: 'Mandatory wearing of seatbelts is strictly required under RA 8750',
-      wrong1: 'Passenger pickup zone ahead',
-      wrong2: 'Wheelchair accessibility ramp ahead',
-      exp: 'Blue circular signs indicate mandatory regulatory instructions—here, mandatory seatbelt compliance (DPWH R6-4).',
+      q: 'What does this blue circular sign require vehicle occupants to do?',
+      correct: 'Wear seatbelts at all times',
+      wrong1: 'Use passenger pickup lane',
+      wrong2: 'Give way to pedestrians',
+      exp: 'Blue circular signs indicate mandatory regulatory instructions—here, mandatory seatbelt compliance under RA 8750 (DPWH R6-4).',
       img: '/assets/png/signs/reg_seatbelt.png',
     },
     {
-      q: 'What does a double solid yellow line painted down the center of a two-way roadway mean?',
-      correct: 'NO OVERTAKING OR CROSSING — crossing the center line to pass is strictly prohibited from both directions',
-      wrong1: 'Overtaking is permitted during daytime hours only',
-      wrong2: 'Reversible tidal flow lane',
-      exp: 'Solid double yellow lines divide opposing traffic where passing is unsafe and illegal from either direction.',
+      q: 'What does a double solid yellow center line on a roadway mean?',
+      correct: 'No overtaking from either direction',
+      wrong1: 'Overtaking allowed during daytime',
+      wrong2: 'Reversible counterflow lane',
+      exp: 'Solid double yellow lines divide opposing traffic where crossing the center line to pass is strictly prohibited from both directions.',
       img: '/assets/png/signs/mark_double_yellow.png',
     },
     {
-      q: 'What does a broken (dashed) white line separating lanes on a highway indicate?',
-      correct: 'Drivers may change lanes or overtake when it is safe and clear to do so',
-      wrong1: 'Lane changing is prohibited at all times',
-      wrong2: 'Parking is permitted along the center line',
-      exp: 'Broken white lines divide lanes where changing lanes or passing is permitted after signaling and checking mirrors/blind spots.',
+      q: 'What does a broken white line separating highway lanes indicate?',
+      correct: 'Changing lanes or overtaking is allowed if safe',
+      wrong1: 'Lane changing is strictly prohibited',
+      wrong2: 'Roadside parking zone',
+      exp: 'Broken white lines divide lanes where changing lanes or passing is permitted after signaling and checking mirrors and blind spots.',
       img: '/assets/png/signs/mark_broken_white.png',
     },
     {
-      q: 'What does a circular white sign with a red border showing two cars side-by-side and a diagonal red slash mean?',
-      correct: 'NO OVERTAKING — passing ahead vehicles is strictly prohibited in this zone',
-      wrong1: 'Two-abreast driving is mandatory',
-      wrong2: 'Car dealership zone ahead',
+      q: 'What does this sign showing two cars with a diagonal red slash mean?',
+      correct: 'No overtaking zone',
+      wrong1: 'Two-lane highway begins',
+      wrong2: 'Car dealership ahead',
       exp: 'DPWH R3-16 No Overtaking prohibits passing other vehicles on curves, bridges, and narrow road sections.',
       img: '/assets/png/signs/reg_no_overtaking.png',
     },
     {
-      q: 'What does a circular red-bordered sign containing a 180-degree curved arrow with a diagonal red slash mean?',
-      correct: 'NO U-TURN — reversing direction by making a U-turn is strictly prohibited',
-      wrong1: 'Hairpin curve ahead',
-      wrong2: 'U-turn slot exclusively for buses',
+      q: 'What does this circular sign with a curved arrow and red slash mean?',
+      correct: 'No U-turn allowed',
+      wrong1: 'Sharp hairpin curve ahead',
+      wrong2: 'U-turn slot for buses only',
       exp: 'DPWH R3-13 No U-Turn prohibits turning back in the opposite direction at that intersection or median opening.',
       img: '/assets/png/signs/reg_no_uturn.png',
     },
     {
-      q: 'What does a circular red-bordered sign showing the letter "P" crossed by a diagonal red slash mean?',
-      correct: 'NO PARKING — leaving a vehicle parked along this roadway section is prohibited',
+      q: 'What does this sign showing the letter "P" with a red slash mean?',
+      correct: 'No parking allowed',
       wrong1: 'Police station ahead',
       wrong2: 'Pedestrian overpass ahead',
-      exp: 'DPWH R5-1 No Parking forbids leaving a vehicle parked in the restricted zone.',
+      exp: 'DPWH R5-1 No Parking forbids leaving a vehicle parked along this restricted roadway section.',
       img: '/assets/png/signs/reg_no_parking.png',
     },
     {
-      q: 'What does an upward-pointing red-bordered triangle depicting a car above wavy skid marks warn you about?',
-      correct: 'SLIPPERY ROAD — pavement ahead becomes dangerously slick when wet or muddy',
-      wrong1: 'Winding mountain road for the next 10 km',
-      wrong2: 'Earthquake fault zone ahead',
+      q: 'What hazard does this warning triangle with skid marks indicate?',
+      correct: 'Slippery road ahead',
+      wrong1: 'Winding mountain road',
+      wrong2: 'Rough gravel pavement',
       exp: 'DPWH W5-9 warns drivers to decelerate smoothly and avoid sudden braking or sharp steering on slippery surfaces.',
       img: '/assets/png/signs/warn_slippery.png',
     },
@@ -875,96 +883,101 @@ export function getTrafficSignsQuestions(): ReviewerQuestion[] {
 
   signQuestions.push(...coreSignQs);
 
-  // Generate 8 distinct, authentic exam angles for each of the 20 ROAD_SIGNS (20 * 8 = 160 questions)
+  // Generate 8 distinct, concise exam angles for each of the 20 ROAD_SIGNS (20 * 8 = 160 questions)
   ROAD_SIGNS.forEach((sign) => {
-    // Angle 1: English Meaning Identification
+    const shortMeaningEn = sign.meaning.en.split('—')[0].split('.')[0].trim();
+    const shortMeaningFil = sign.meaning.fil.split('—')[0].split('.')[0].trim();
+    const shortActionEn = sign.requiredAction.en.split('.')[0].split(';')[0].trim();
+    const shortActionFil = sign.requiredAction.fil.split('.')[0].split(';')[0].trim();
+
+    // Angle 1: English Sign Identification
     signQuestions.push({
-      q: `Identify the meaning of this official Philippine road sign / marking (${sign.name.en}):`,
-      correct: sign.meaning.en,
-      wrong1: 'You may accelerate up to 100 km/h without yielding to other road users',
-      wrong2: 'This road section is closed to private passenger vehicles on weekdays',
-      exp: `${sign.explanation.en} ${sign.requiredAction.en} (${sign.sourceReference})`,
+      q: 'What is the official name of this road sign or marking?',
+      correct: sign.name.en,
+      wrong1: 'End of Speed Limit',
+      wrong2: 'Road Closed Ahead',
+      exp: `${sign.name.en}: ${sign.explanation.en} (${sign.sourceReference})`,
       img: sign.imageResource,
     });
 
-    // Angle 2: Required Driver Action (English)
+    // Angle 2: English Meaning
     signQuestions.push({
-      q: `What is the required safe driving action when you encounter this "${sign.name.en}" sign/marking on the road?`,
-      correct: sign.requiredAction.en,
-      wrong1: 'Sound your horn continuously and maintain highway cruising speed',
-      wrong2: 'Switch on your hazard warning lights and stop in the middle of the lane',
-      exp: `${sign.requiredAction.en} Reference: ${sign.sourceReference}.`,
+      q: `What does this "${sign.name.en}" sign indicate to drivers?`,
+      correct: shortMeaningEn,
+      wrong1: 'Accelerate without yielding',
+      wrong2: 'Free roadside parking zone',
+      exp: `${sign.explanation.en} ${sign.requiredAction.en}`,
       img: sign.imageResource,
     });
 
-    // Angle 3: Tagalog Meaning Identification
+    // Angle 3: Required Driver Action (English)
     signQuestions.push({
-      q: `Ano ang tamang kahulugan ng babala o karatulang ito sa kalsada (${sign.name.fil})?`,
-      correct: sign.meaning.fil,
-      wrong1: 'Maaaring bumusina at bumilis nang walang pag-iingat sa bahaging ito',
-      wrong2: 'Nangangahulugang libre ang pagparada sa magkabilang gilid ng kalsada',
+      q: 'What should drivers do when approaching this sign?',
+      correct: shortActionEn,
+      wrong1: 'Honk continuously and speed up',
+      wrong2: 'Stop in the middle of the lane',
+      exp: `${sign.requiredAction.en} (${sign.sourceReference})`,
+      img: sign.imageResource,
+    });
+
+    // Angle 4: Tagalog Sign Identification
+    signQuestions.push({
+      q: 'Ano ang tawag sa opisyal na karatula o markang ito sa kalsada?',
+      correct: sign.name.fil,
+      wrong1: 'Bawal Bumusina',
+      wrong2: 'Sarado ang Kalsada',
+      exp: `${sign.name.fil}: ${sign.explanation.fil}`,
+      img: sign.imageResource,
+    });
+
+    // Angle 5: Tagalog Meaning
+    signQuestions.push({
+      q: `Ano ang kahulugan ng karatulang "${sign.name.fil}"?`,
+      correct: shortMeaningFil,
+      wrong1: 'Bumilis nang walang pag-iingat',
+      wrong2: 'Libreng paradahan sa bangketa',
       exp: `${sign.explanation.fil} ${sign.requiredAction.fil}`,
       img: sign.imageResource,
     });
 
-    // Angle 4: Tagalog Required Action
+    // Angle 6: Tagalog Required Action
     signQuestions.push({
-      q: `Ano ang dapat gawin ng isang responsableng drayber kapag nakita ang "${sign.name.fil}" sa daan?`,
-      correct: sign.requiredAction.fil,
-      wrong1: 'Bilisan pa ang takbo upang makalampas agad sa lugar',
-      wrong2: 'Patayin ang headlight at magmaneho sa bangketa',
+      q: `Ano ang dapat gawin ng drayber kapag nakita ang "${sign.name.fil}"?`,
+      correct: shortActionFil,
+      wrong1: 'Bilisan pa ang takbo agad',
+      wrong2: 'Mag-counterflow sa kabilang linya',
       exp: `${sign.requiredAction.fil} (${sign.sourceReference})`,
-      img: sign.imageResource,
-    });
-
-    // Angle 5: Visual Shape & Color Recognition (English)
-    signQuestions.push({
-      q: `Which official LTO / DPWH road sign or marking matches this description: "${sign.explanation.en}"?`,
-      correct: `${sign.name.en} — ${sign.meaning.en}`,
-      wrong1: 'End of All Speed Restrictions on Rural Highways',
-      wrong2: 'Mandatory Snow Chains and Winter Tires Zone',
-      exp: `${sign.name.en}: ${sign.explanation.en}`,
-      img: sign.imageResource,
-    });
-
-    // Angle 6: Situational Application (English)
-    signQuestions.push({
-      q: `Driving Scenario: "${sign.exampleSituation.en}" Seeing this sign/marking, what must you do?`,
-      correct: sign.requiredAction.en,
-      wrong1: 'Overtake the vehicle ahead immediately on the right shoulder',
-      wrong2: 'Ignore the sign if no traffic enforcer is standing nearby',
-      exp: `In this scenario (${sign.exampleSituation.en}), you must: ${sign.requiredAction.en}`,
       img: sign.imageResource,
     });
 
     // Angle 7: Category Classification
     const catLabel =
       sign.category === 'REGULATORY'
-        ? 'Regulatory Sign (enforces traffic laws and prohibitions that must be obeyed)'
+        ? 'Regulatory Sign'
         : sign.category === 'WARNING'
-        ? 'Warning Sign (alerts drivers to upcoming road hazards or conditions ahead)'
+        ? 'Warning Sign'
         : sign.category === 'GUIDE_INFORMATIONAL'
-        ? 'Guide / Informational Sign (provides direction, distance, or service locations)'
+        ? 'Guide / Informational Sign'
         : sign.category === 'PAVEMENT_MARKINGS'
-        ? 'Pavement Marking (painted road lines/symbols controlling lane discipline and right-of-way)'
-        : 'Traffic Light Signal (illuminated intersection control signal)';
+        ? 'Pavement Marking'
+        : 'Traffic Light Signal';
 
     signQuestions.push({
-      q: `Under which official DPWH / LTO classification does "${sign.name.en}" belong?`,
+      q: `Which official LTO classification does "${sign.name.en}" belong to?`,
       correct: catLabel,
-      wrong1: 'Temporary Construction Detour Contractor Banner',
-      wrong2: 'Private Commercial Advertising Billboard',
-      exp: `${sign.name.en} belongs to ${catLabel}. (${sign.sourceReference})`,
+      wrong1: 'Temporary Detour Banner',
+      wrong2: 'Commercial Billboard',
+      exp: `${sign.name.en} is classified as a ${catLabel}. ${sign.explanation.en}`,
       img: sign.imageResource,
     });
 
-    // Angle 8: Tagalog Situational Application
+    // Angle 8: Hazard / Rule Watch
     signQuestions.push({
-      q: `Sitwasyon sa Kalsada: "${sign.exampleSituation.fil}" Ano ang ipinag-uutos ng karatulang "${sign.name.fil}"?`,
-      correct: sign.requiredAction.fil,
-      wrong1: 'Mag-U-turn agad sa gitna ng kalsada kahit may kasalubong',
-      wrong2: 'Huminto sa gitna ng linya at maghintay ng sampung minuto',
-      exp: `${sign.meaning.fil} — ${sign.requiredAction.fil}`,
+      q: 'What traffic rule or road condition does this sign enforce?',
+      correct: `${sign.name.en} (${shortMeaningEn})`,
+      wrong1: 'Minimum highway speed of 80 km/h',
+      wrong2: 'Designated truck weighing station',
+      exp: `${sign.meaning.en} — ${sign.requiredAction.en}`,
       img: sign.imageResource,
     });
   });

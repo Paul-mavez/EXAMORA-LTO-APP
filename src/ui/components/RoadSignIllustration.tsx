@@ -3,6 +3,7 @@ import React from 'react';
 interface RoadSignIllustrationProps {
   imageResource: string;
   className?: string;
+  variant?: 'card' | 'quiz';
 }
 
 /**
@@ -13,11 +14,42 @@ interface RoadSignIllustrationProps {
 export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
   imageResource,
   className = '',
+  variant = 'card',
 }) => {
   const key = imageResource.split('/').pop()?.replace('.png', '') || '';
+  const isQuiz = variant === 'quiz';
 
   const renderGraphic = () => {
     switch (key) {
+      // 0. ANIMALS CROSSING (Red-bordered warning triangle with cow silhouette - Matches IMG_4114 & IMG_4115)
+      case 'warn_animals_crossing':
+        return (
+          <div className="flex flex-col items-center">
+            <svg viewBox="0 0 220 200" className={isQuiz ? 'w-56 h-52 drop-shadow-2xl' : 'w-44 h-40 drop-shadow-xl'}>
+              <polygon
+                points="110,16 202,180 18,180"
+                fill="#FFFFFF"
+                stroke="#D9232A"
+                strokeWidth="16"
+                strokeLinejoin="round"
+              />
+              {/* Cattle / Cow silhouette */}
+              <g transform="translate(56, 86) scale(0.95)">
+                {/* Body */}
+                <path
+                  d="M 18 30 C 18 22, 26 20, 42 20 L 76 18 C 82 18, 86 12, 92 6 L 98 6 L 96 10 L 104 9 L 100 13 C 105 16, 110 21, 112 25 C 113 28, 108 30, 102 30 C 97 30, 94 34, 90 40 C 86 45, 82 50, 78 52 L 79 74 L 74 74 L 71 54 L 66 54 L 68 74 L 63 74 L 61 52 C 50 53, 38 53, 30 50 L 27 74 L 22 74 L 24 51 L 19 52 L 16 74 L 11 74 L 15 44 C 13 40, 13 34, 15 30 L 11 52 L 8 50 L 13 28 Z"
+                  fill="#0B0B0C"
+                />
+              </g>
+            </svg>
+            {!isQuiz && (
+              <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
+                ⚠️ Animals Crossing Warning Sign
+              </span>
+            )}
+          </div>
+        );
+
       // 1. YELLOW BOX JUNCTION (Full 4-Way Road Intersection View with Cars, Curbs & Stop Lines)
       case 'mark_yellow_box':
         return (
@@ -536,6 +568,16 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
         );
     }
   };
+
+  if (isQuiz) {
+    return (
+      <div
+        className={`my-2 flex items-center justify-center shrink-0 [&>div>span]:hidden [&_svg]:w-[clamp(6.75rem,17vh,10.5rem)] [&_svg]:h-[clamp(6.25rem,16vh,9.75rem)] ${className}`}
+      >
+        {renderGraphic()}
+      </div>
+    );
+  }
 
   return (
     <div

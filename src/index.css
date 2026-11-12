@@ -9,8 +9,8 @@
   }
 
   html, body {
-    background-color: #000000;
-    color: #FFFFFF;
+    background-color: #EFF6FF;
+    color: #0F172A;
     font-family: var(--font-body);
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
@@ -25,6 +25,132 @@
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
   }
+}
+
+/* Permanent Light Blue & Crisp White Theme System */
+.bg-\[\#000000\],
+.bg-\[\#000000\]\/60 {
+  background-color: #EFF6FF !important;
+}
+
+.bg-\[\#161618\],
+.bg-\[\#1C1C1E\],
+.bg-\[\#1C1C1E\]\/60 {
+  background-color: #FFFFFF !important;
+}
+
+.bg-\[\#1C1C1E\]\/95 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+.bg-\[\#242426\],
+.bg-\[\#2C2C2E\],
+.bg-\[\#2C2C2E\]\/60,
+.bg-\[\#2C2C2E\]\/70,
+.bg-\[\#3A3A3C\] {
+  background-color: #DBEAFE !important;
+}
+
+.hover\:bg-\[\#242426\]:hover,
+.hover\:bg-\[\#2C2C2E\]:hover,
+.hover\:bg-\[\#2C2C2E\]\/40:hover {
+  background-color: #E0F2FE !important;
+}
+
+.bg-\[\#0B0D13\] {
+  background-color: #F0F7FF !important;
+}
+
+.border-\[\#1C1C1E\]\/50,
+.border-\[\#242426\],
+.border-\[\#2C2C2E\],
+.border-\[\#38383A\],
+.border-\[\#38383A\]\/60,
+.border-\[\#3A3A3C\],
+.border-\[\#48484A\] {
+  border-color: #BFDBFE !important;
+}
+
+.divide-\[\#2C2C2E\] > :not([hidden]) ~ :not([hidden]),
+.divide-\[\#2C2C2E\]\/70 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #DBEAFE !important;
+}
+
+/* Deep Navy Typography on Light Blue & White Surfaces (preserving white text on blue buttons & badges) */
+.text-white:not(.bg-\[\#0A84FF\]):not(.bg-\[\#0A84FF\] *):not(.keep-white):not(.keep-white *) {
+  color: #0F172A !important;
+}
+
+.text-\[\#E5E5EA\],
+.text-\[\#D1D1D6\],
+.text-\[\#EBEBF5\]\/90,
+.text-\[\#EBEBF5\]\/85,
+.text-\[\#EBEBF5\]\/80 {
+  color: #0F172A !important;
+}
+
+.text-\[\#8E8E93\],
+.text-\[\#636366\] {
+  color: #475569 !important;
+}
+
+.placeholder-\[\#8E8E93\]::placeholder {
+  color: #64748B !important;
+}
+
+/* Correct / Wrong / Explanation / Study Session Callouts on Light Blue & White */
+.bg-\[\#0E2415\],
+.bg-\[\#112418\] {
+  background-color: #ECFDF5 !important;
+}
+
+.bg-\[\#2A1215\] {
+  background-color: #FEF2F2 !important;
+}
+
+.bg-\[\#20170A\],
+.bg-\[\#201608\],
+.bg-\[\#1C1408\] {
+  background-color: #F0F9FF !important;
+}
+
+.border-\[\#422E14\],
+.border-\[\#3E2911\] {
+  border-color: #7DD3FC !important;
+}
+
+.text-\[\#D2B48C\],
+.text-\[\#E0B88F\],
+.text-\[\#A3733A\] {
+  color: #0369A1 !important;
+}
+
+.bg-\[\#3B2206\] {
+  background-color: #E0F2FE !important;
+}
+
+.border-\[\#683C0B\]\/60 {
+  border-color: #7DD3FC !important;
+}
+
+.bg-\[\#0E2A47\] {
+  background-color: #DBEAFE !important;
+}
+
+.hover\:bg-\[\#153D66\]:hover {
+  background-color: #BFDBFE !important;
+}
+
+.from-\[\#0F223D\] {
+  --tw-gradient-from: #DBEAFE !important;
+}
+
+.to-\[\#1C1C1E\] {
+  --tw-gradient-to: #FFFFFF !important;
+}
+
+.border-\[\#1F3E68\] {
+  border-color: #93C5FD !important;
 }
 
 /* Hide scrollbar for clean mobile experience */

@@ -42,26 +42,32 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white flex justify-center selection:bg-[#0A84FF] selection:text-white">
+    <div className="min-h-screen bg-[#EFF6FF] text-[#0F172A] flex justify-center selection:bg-[#0A84FF] selection:text-white">
       {/* Mobile-constrained Application Container */}
-      <div className="w-full max-w-md min-h-screen flex flex-col relative bg-[#000000] border-x border-[#1C1C1E]/50 shadow-2xl">
+      <div className="w-full max-w-md min-h-screen flex flex-col relative bg-[#EFF6FF] border-x border-[#BFDBFE]/70 shadow-xl">
         {!hasCompletedOnboarding ? (
           <main className="flex-1">
             <OnboardingView onComplete={handleCompleteOnboarding} />
           </main>
         ) : (
           <>
-            {/* Screen Content by Tab */}
+            {/* Screen Content by Tab (Kept Mounted so Quiz & Reviewer Progress Never Resets on Tab Switch) */}
             <main className="flex-1">
-              {activeTab === 'QUIZ' && <QuizView />}
-              {activeTab === 'REVIEWERS' && <ReviewersView />}
-              {activeTab === 'NEWS' && <NewsView />}
-              {activeTab === 'ABOUT' && (
+              <div className={activeTab === 'QUIZ' ? 'block' : 'hidden'}>
+                <QuizView />
+              </div>
+              <div className={activeTab === 'REVIEWERS' ? 'block' : 'hidden'}>
+                <ReviewersView />
+              </div>
+              <div className={activeTab === 'NEWS' ? 'block' : 'hidden'}>
+                <NewsView />
+              </div>
+              <div className={activeTab === 'ABOUT' ? 'block' : 'hidden'}>
                 <AboutView onReplayOnboarding={handleReplayOnboarding} />
-              )}
+              </div>
             </main>
 
-            {/* Bottom Floating Pill Navigation Dock (Matches Screenshots) */}
+            {/* Bottom Floating Pill Navigation Dock */}
             <BottomTabBar activeTab={activeTab} onSelectTab={setActiveTab} />
           </>
         )}

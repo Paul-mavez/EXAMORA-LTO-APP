@@ -57,19 +57,19 @@ export const AboutView: React.FC<AboutViewProps> = ({ onReplayOnboarding }) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 pt-4 pb-28 text-white min-h-screen">
+    <div className="w-full max-w-md mx-auto px-4 pt-10 pb-28 text-white min-h-screen">
       {/* Title */}
       <h1 className="text-3xl font-extrabold tracking-tight text-white mb-6">
         About
       </h1>
 
-      {/* App Squircle Emblem & Title (Exact match to Screenshot IMG_4107) */}
+      {/* App Squircle Emblem & Title (Pure Royal Blue Squircle Logo) */}
       <div className="flex flex-col items-center text-center mb-8">
-        <div className="w-24 h-24 rounded-3xl overflow-hidden shadow-2xl border border-white/10 mb-4 bg-[#0A2540] p-1 flex items-center justify-center">
+        <div className="w-24 h-24 rounded-[22px] overflow-hidden shadow-2xl mb-4 bg-[#001F87] flex items-center justify-center">
           <img
             src="/assets/png/examora_logo.png"
             alt="LTO Driver Exam Reviewer"
-            className="w-full h-full object-cover rounded-2xl"
+            className="w-full h-full object-cover scale-[1.08]"
             onError={(e) => {
               const target = e.currentTarget;
               target.style.display = 'none';

@@ -20,7 +20,7 @@ export const NewsView: React.FC = () => {
   });
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 pt-4 pb-28 text-white min-h-screen">
+    <div className="w-full max-w-md mx-auto px-4 pt-10 pb-28 text-white min-h-screen">
       {/* Title */}
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-3xl font-extrabold tracking-tight text-white">

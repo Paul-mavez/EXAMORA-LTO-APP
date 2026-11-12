@@ -97,7 +97,7 @@ export const ReviewersView: React.FC = () => {
   // -------------------------------------------------------------
   if (!activeCategory) {
     return (
-      <div className="w-full max-w-md mx-auto px-4 pt-4 pb-28 text-white">
+      <div className="w-full max-w-md mx-auto px-4 pt-10 pb-28 text-white">
         {/* Large Bold Header */}
         <h1 className="text-3xl font-extrabold tracking-tight text-white mb-4">
           Study Guide
@@ -137,12 +137,7 @@ export const ReviewersView: React.FC = () => {
               className="w-full p-4 text-left flex items-center justify-between gap-3.5 hover:bg-[#2C2C2E]/40 active:bg-[#2C2C2E]/60 transition-colors group"
             >
               <div className="flex items-center gap-3.5 min-w-0">
-                <div className="relative shrink-0">
-                  <CategoryBadge type={cat.iconType} size="md" />
-                  {cat.id === 'tagalog' && (
-                    <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-[#34C759] border-2 border-[#1C1C1E]" />
-                  )}
-                </div>
+                <CategoryBadge type={cat.iconType} size="md" />
                 <div className="min-w-0">
                   <h3 className="text-base font-semibold text-white group-hover:text-[#0A84FF] transition-colors truncate">
                     {cat.title}
@@ -182,7 +177,7 @@ export const ReviewersView: React.FC = () => {
   // VIEW 2: CATEGORY STUDY SESSION (Matches Screenshot IMG_4104 & IMG_4105)
   // -------------------------------------------------------------
   return (
-    <div className="w-full max-w-md mx-auto px-4 pt-3 pb-28 text-white min-h-screen">
+    <div className="w-full max-w-md mx-auto px-4 pt-7 pb-28 text-white min-h-screen">
       {/* Top Bar with circular back button and centered title */}
       <div className="relative flex items-center justify-center py-2 mb-3">
         <button
