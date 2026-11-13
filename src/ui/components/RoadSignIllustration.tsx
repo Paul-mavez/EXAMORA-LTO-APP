@@ -43,8 +43,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               </g>
             </svg>
             {!isQuiz && (
-              <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-                ⚠️ Animals Crossing Warning Sign
+              <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+                Animals Crossing · Warning Sign
               </span>
             )}
           </div>
@@ -119,8 +119,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
                 YELLOW BOX JUNCTION
               </text>
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🛣️ 4-Way Road Intersection Marking
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              4-Way Road Intersection Marking
             </span>
           </div>
         );
@@ -147,8 +147,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
                 <rect x="3" y="22" width="18" height="10" rx="2" fill="#0F172A" />
               </g>
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🛣️ Two-Lane Highway Center Line
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Two-Lane Highway Center Line
             </span>
           </div>
         );
@@ -172,8 +172,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
                 <rect x="3" y="8" width="18" height="10" rx="2" fill="#0F172A" />
               </g>
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🛣️ Broken White Lane Divider
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Broken White Lane Divider
             </span>
           </div>
         );
@@ -192,8 +192,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
                 <rect key={xPos} x={xPos} y="68" width="18" height="58" rx="2" fill="#FFFFFF" />
               ))}
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚶 Pedestrian Zebra Crossing
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Pedestrian Zebra Crossing
             </span>
           </div>
         );
@@ -213,8 +213,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
                 STOP
               </text>
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🛑 Regulatory Octagon Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Regulatory Octagon Sign
             </span>
           </div>
         );
@@ -238,8 +238,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
                 WAY
               </text>
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              ⚠️ Regulatory Yield Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Regulatory Yield Sign
             </span>
           </div>
         );
@@ -252,8 +252,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <circle cx="100" cy="100" r="86" fill="#DC2626" stroke="#FFFFFF" strokeWidth="6" />
               <rect x="34" y="82" width="132" height="36" rx="6" fill="#FFFFFF" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              ⛔ Regulatory Prohibition Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Regulatory Prohibition Sign
             </span>
           </div>
         );
@@ -271,8 +271,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
                 km/h
               </text>
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚗 Speed Restriction Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Speed Restriction Sign
             </span>
           </div>
         );
@@ -289,8 +289,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <line x1="60" y1="144" x2="140" y2="144" stroke="#0284C7" strokeWidth="10" strokeLinecap="round" />
               <rect x="128" y="138" width="12" height="12" rx="2" fill="#EF4444" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🔵 Mandatory Seatbelt Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Mandatory Seatbelt Sign
             </span>
           </div>
         );
@@ -305,8 +305,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <polygon points="74,148 54,118 94,118" fill="#111827" />
               <line x1="42" y1="42" x2="158" y2="158" stroke="#DC2626" strokeWidth="18" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚫 Regulatory Prohibition Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Regulatory Prohibition Sign
             </span>
           </div>
         );
@@ -331,8 +331,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               </g>
               <line x1="42" y1="42" x2="158" y2="158" stroke="#DC2626" strokeWidth="16" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚫 Regulatory Prohibition Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Regulatory Prohibition Sign
             </span>
           </div>
         );
@@ -348,8 +348,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               </text>
               <line x1="42" y1="42" x2="158" y2="158" stroke="#DC2626" strokeWidth="18" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚫 Parking Restriction Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Parking Restriction Sign
             </span>
           </div>
         );
@@ -365,8 +365,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <path d="M 84 114 Q 98 130, 76 144 Q 64 154, 82 162" fill="none" stroke="#111827" strokeWidth="5" strokeLinecap="round" />
               <path d="M 116 114 Q 130 130, 108 144 Q 96 154, 114 162" fill="none" stroke="#111827" strokeWidth="5" strokeLinecap="round" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              ⚠️ Road Hazard Warning Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Road Hazard Warning Sign
             </span>
           </div>
         );
@@ -384,8 +384,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <line x1="100" y1="124" x2="84" y2="152" stroke="#111827" strokeWidth="8" strokeLinecap="round" />
               <line x1="100" y1="124" x2="116" y2="152" stroke="#111827" strokeWidth="8" strokeLinecap="round" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              ⚠️ Advance Warning Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Advance Warning Sign
             </span>
           </div>
         );
@@ -399,8 +399,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <path d="M 82 154 L 82 108 Q 82 90, 100 90 L 122 90" fill="none" stroke="#111827" strokeWidth="14" strokeLinecap="round" />
               <polygon points="140,90 116,72 116,108" fill="#111827" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              ⚠️ Horizontal Alignment Warning Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Horizontal Alignment Warning Sign
             </span>
           </div>
         );
@@ -422,8 +422,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <line x1="122" y1="136" x2="114" y2="160" stroke="#111827" strokeWidth="6" strokeLinecap="round" />
               <line x1="122" y1="136" x2="130" y2="160" stroke="#111827" strokeWidth="6" strokeLinecap="round" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚸 School Zone Pentagon Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              School Zone Pentagon Sign
             </span>
           </div>
         );
@@ -439,8 +439,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <line x1="116" y1="84" x2="116" y2="140" stroke="#111827" strokeWidth="10" strokeLinecap="round" />
               <polygon points="116,160 102,136 130,136" fill="#111827" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              ⚠️ Two-Way Traffic Warning Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Two-Way Traffic Warning Sign
             </span>
           </div>
         );
@@ -456,8 +456,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <circle cx="100" cy="115" r="8" fill="#FACC15" />
               <circle cx="100" cy="140" r="8" fill="#22C55E" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              ⚠️ Traffic Signal Ahead Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Traffic Signal Ahead Sign
             </span>
           </div>
         );
@@ -472,8 +472,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <rect x="120" y="52" width="24" height="96" fill="#FFFFFF" />
               <rect x="56" y="88" width="88" height="24" fill="#FFFFFF" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🏥 Blue Service Guide Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Blue Service Guide Sign
             </span>
           </div>
         );
@@ -493,8 +493,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <line x1="80" y1="116" x2="152" y2="116" stroke="#FFFFFF" strokeWidth="7" strokeLinecap="round" />
               <polygon points="164,116 142,102 142,130" fill="#FFFFFF" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🛣️ Green Expressway Guide Sign
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Green Expressway Guide Sign
             </span>
           </div>
         );
@@ -510,8 +510,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <circle cx="100" cy="100" r="18" fill="#374151" />
               <circle cx="100" cy="148" r="18" fill="#374151" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚦 Red Traffic Light Signal
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Red Traffic Light Signal
             </span>
           </div>
         );
@@ -533,8 +533,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <line x1="154" y1="126" x2="142" y2="118" stroke="#FACC15" strokeWidth="4" strokeLinecap="round" />
               <circle cx="100" cy="148" r="18" fill="#374151" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚦 Flashing Yellow Traffic Signal
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Flashing Yellow Traffic Signal
             </span>
           </div>
         );
@@ -550,8 +550,8 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
               <circle cx="100" cy="148" r="22" fill="#22C55E" />
               <circle cx="100" cy="148" r="15" fill="#86EFAC" />
             </svg>
-            <span className="mt-2.5 text-[11px] font-semibold text-[#8E8E93] bg-[#1C1C1E] px-3 py-1 rounded-full border border-[#2C2C2E]">
-              🚦 Green Traffic Light Signal
+            <span className="mt-3 text-xs font-medium tracking-tight text-[#667085]">
+              Green Traffic Light Signal
             </span>
           </div>
         );
@@ -581,7 +581,7 @@ export const RoadSignIllustration: React.FC<RoadSignIllustrationProps> = ({
 
   return (
     <div
-      className={`my-4 p-4 bg-[#0B0D13] rounded-2xl border border-[#2C2C2E] flex items-center justify-center ${className}`}
+      className={`my-4 p-4 bg-[#FAF9F6] rounded-xl border border-[#E2E5EB] flex items-center justify-center ${className}`}
     >
       {renderGraphic()}
     </div>

@@ -42,9 +42,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#EFF6FF] text-[#0F172A] flex justify-center selection:bg-[#0A84FF] selection:text-white">
+    <div className="min-h-screen bg-[#FAF9F6] text-[#14243A] flex justify-center selection:bg-[#14243A] selection:text-[#FAF9F6]">
       {/* Mobile-constrained Application Container */}
-      <div className="w-full max-w-md min-h-screen flex flex-col relative bg-[#EFF6FF] border-x border-[#BFDBFE]/70 shadow-xl">
+      <div className="w-full max-w-md min-h-screen flex flex-col relative bg-[#FAF9F6] sm:border-x sm:border-[#E2E5EB]">
         {!hasCompletedOnboarding ? (
           <main className="flex-1">
             <OnboardingView onComplete={handleCompleteOnboarding} />

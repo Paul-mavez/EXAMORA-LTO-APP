@@ -31,7 +31,7 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
     case 'ph_flag':
       return (
         <div
-          className={`${currentSize} keep-white bg-gradient-to-br from-[#0A84FF] via-[#2563EB] to-[#1D4ED8] flex items-center justify-center shrink-0 shadow-md shadow-[#0A84FF]/20 border border-white/40 relative overflow-hidden ${className}`}
+          className={`${currentSize} bg-gradient-to-br from-[#0A84FF] via-[#2563EB] to-[#1D4ED8] flex items-center justify-center shrink-0 shadow-md shadow-[#0A84FF]/20 border border-white/40 relative overflow-hidden ${className}`}
         >
           <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
           <div className={`relative flex flex-col items-center justify-center ${iconScale}`}>
@@ -71,7 +71,7 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
     case 'english_book':
       return (
         <div
-          className={`${currentSize} keep-white bg-gradient-to-br from-[#38BDF8] via-[#0284C7] to-[#0369A1] flex items-center justify-center shrink-0 shadow-md shadow-[#0284C7]/20 border border-white/40 relative overflow-hidden ${className}`}
+          className={`${currentSize} bg-gradient-to-br from-[#38BDF8] via-[#0284C7] to-[#0369A1] flex items-center justify-center shrink-0 shadow-md shadow-[#0284C7]/20 border border-white/40 relative overflow-hidden ${className}`}
         >
           <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
           <div className={`relative flex flex-col items-center justify-center ${iconScale}`}>
@@ -94,16 +94,15 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
         </div>
       );
 
-    // 3. TRAFFIC SIGNS, SIGNALS AND MARKINGS (Modern Road Sign Diamond + Glowing Traffic Signal)
+    // 3. TRAFFIC SIGNS, SIGNALS AND MARKINGS (Modern Traffic Signal)
     case 'traffic_light':
       return (
         <div
-          className={`${currentSize} keep-white bg-gradient-to-br from-[#0EA5E9] via-[#0284C7] to-[#1E40AF] flex items-center justify-center shrink-0 shadow-md shadow-[#0284C7]/20 border border-white/40 relative overflow-hidden ${className}`}
+          className={`${currentSize} bg-gradient-to-br from-[#0EA5E9] via-[#0284C7] to-[#1E40AF] flex items-center justify-center shrink-0 shadow-md shadow-[#0284C7]/20 border border-white/40 relative overflow-hidden ${className}`}
         >
           <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
           <div className={`relative flex items-center justify-center ${iconScale}`}>
             <svg viewBox="0 0 36 36" className="w-9 h-9 drop-shadow-sm">
-              {/* Crisp White Outer Housing */}
               <rect
                 x="10"
                 y="3"
@@ -114,7 +113,6 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
                 stroke="#FFFFFF"
                 strokeWidth="2"
               />
-              {/* Red, Yellow, Green Glowing Lenses */}
               <circle cx="18" cy="10" r="3.4" fill="#FF453A" />
               <circle cx="18" cy="18" r="3.4" fill="#FACC15" />
               <circle cx="18" cy="26" r="3.4" fill="#30D158" />
@@ -123,11 +121,11 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
         </div>
       );
 
-    // 4. CDE ENGLISH (Royal Blue Squircle with Graduation Cap & EN Star Badge)
+    // 4. CDE ENGLISH (Royal Blue Squircle with Graduation Cap & CDE•EN Badge)
     case 'cde_en':
       return (
         <div
-          className={`${currentSize} keep-white bg-gradient-to-br from-[#2563EB] via-[#1D4ED8] to-[#1E3A8A] flex items-center justify-center shrink-0 shadow-md shadow-[#1D4ED8]/20 border border-white/40 relative overflow-hidden ${className}`}
+          className={`${currentSize} bg-gradient-to-br from-[#2563EB] via-[#1D4ED8] to-[#1E3A8A] flex items-center justify-center shrink-0 shadow-md shadow-[#1D4ED8]/20 border border-white/40 relative overflow-hidden ${className}`}
         >
           <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
           <div className={`relative flex flex-col items-center justify-center ${iconScale}`}>
@@ -141,11 +139,11 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
         </div>
       );
 
-    // 5. CDE TAGALOG (Sky-Royal Blue Squircle with Graduation Cap & Golden Sun Accent)
+    // 5. CDE TAGALOG (Sky-Royal Blue Squircle with Graduation Cap & CDE•TL Badge)
     case 'cde_tl':
       return (
         <div
-          className={`${currentSize} keep-white bg-gradient-to-br from-[#0284C7] via-[#2563EB] to-[#1E40AF] flex items-center justify-center shrink-0 shadow-md shadow-[#2563EB]/20 border border-white/40 relative overflow-hidden ${className}`}
+          className={`${currentSize} bg-gradient-to-br from-[#0284C7] via-[#2563EB] to-[#1E40AF] flex items-center justify-center shrink-0 shadow-md shadow-[#2563EB]/20 border border-white/40 relative overflow-hidden ${className}`}
         >
           <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
           <div className={`relative flex flex-col items-center justify-center ${iconScale}`}>
@@ -159,11 +157,11 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
         </div>
       );
 
-    // 6. TDC: THEORETICAL DRIVING COURSE (Bright Sky-Azure Squircle with Modern Car & Steering Emblem)
+    // 6. TDC: THEORETICAL DRIVING COURSE (Bright Sky-Azure Squircle with Car & TDC Badge)
     case 'tdc_car':
       return (
         <div
-          className={`${currentSize} keep-white bg-gradient-to-br from-[#38BDF8] via-[#0A84FF] to-[#2563EB] flex items-center justify-center shrink-0 shadow-md shadow-[#0A84FF]/20 border border-white/40 relative overflow-hidden ${className}`}
+          className={`${currentSize} bg-gradient-to-br from-[#38BDF8] via-[#0A84FF] to-[#2563EB] flex items-center justify-center shrink-0 shadow-md shadow-[#0A84FF]/20 border border-white/40 relative overflow-hidden ${className}`}
         >
           <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
           <div className={`relative flex flex-col items-center justify-center ${iconScale}`}>

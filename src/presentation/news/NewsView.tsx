@@ -101,7 +101,7 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ value, onChange }) =>
     onScroll: () => void
   ) => (
     <div className="relative h-[220px] overflow-hidden">
-      <div className="pointer-events-none absolute inset-x-0 top-[88px] z-0 h-11 rounded-xl bg-[#DBEAFE]" />
+      <div className="pointer-events-none absolute inset-x-0 top-[88px] z-0 h-11 rounded-md border border-[#E2E5EB] bg-[#FAF9F6]" />
       <div
         ref={ref}
         role="listbox"
@@ -116,8 +116,10 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ value, onChange }) =>
             key={`${label}-${item}`}
             role="option"
             aria-selected={index === selectedIndex}
-            className={`flex h-11 snap-center items-center justify-center text-[28px] tabular-nums transition-opacity ${
-              index === selectedIndex ? 'text-[#14243A] opacity-100' : 'text-[#98A2B3] opacity-70'
+            className={`flex h-11 snap-center items-center justify-center text-[26px] font-mono-tabular transition-opacity ${
+              index === selectedIndex
+                ? 'text-[#14243A] font-semibold opacity-100'
+                : 'text-[#667085] opacity-45'
             }`}
           >
             {item}
@@ -132,7 +134,7 @@ const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ value, onChange }) =>
   return (
     <section
       aria-label="Choose alarm time"
-      className="mt-5 overflow-hidden rounded-3xl border border-[#BFDBFE] bg-white p-3"
+      className="mt-4 overflow-hidden rounded-xl border border-[#E2E5EB] bg-white p-3"
     >
       <div className="grid grid-cols-[1fr_1.2fr_1fr] items-center gap-1">
         {renderWheel(
@@ -173,7 +175,7 @@ export const NewsView: React.FC = () => {
       const currentDay = new Date().getDay();
       if (
         !settings.enabled ||
-        settings.repeatDays.length > 0 && !settings.repeatDays.includes(currentDay) ||
+        (settings.repeatDays.length > 0 && !settings.repeatDays.includes(currentDay)) ||
         currentTime < settings.time ||
         settings.lastReminderDate === today
       ) {
@@ -285,28 +287,32 @@ export const NewsView: React.FC = () => {
   })();
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 pt-8 pb-32 min-h-screen text-[#14243A]">
+    <div className="w-full max-w-md mx-auto px-4 pt-9 pb-32 min-h-screen text-[#14243A]">
       <div className="mb-6">
-        <p className="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-[#0A84FF]">
-          Daily alarm
+        <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#5578A8]">
+          Daily Schedule
         </p>
-        <h1 className="font-display text-3xl font-bold tracking-tight text-[#14243A]">
-          Practice reminder
+        <h1 className="font-display text-3xl font-bold tracking-[-0.02em] text-[#14243A]">
+          Practice Reminder
         </h1>
-        <p className="mt-1 text-sm text-[#667085]">
-          Set a time for Examora to remind you to practice.
+        <p className="mt-1 text-sm text-[#667085] leading-[1.6]">
+          Set a consistent time for your daily LTO review.
         </p>
       </div>
 
-      <section className="rounded-3xl border border-[#BFDBFE] bg-white p-5 shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#DBEAFE] text-[#0A84FF]">
-            {settings.enabled ? <Bell className="h-5 w-5" /> : <BellOff className="h-5 w-5" />}
+      <section className="rounded-xl border border-[#E2E5EB] bg-white p-5">
+        <div className="flex items-center gap-3 pb-4 border-b border-[#E9EBEF]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[#E2E5EB] bg-[#FAF9F6] text-[#5578A8]">
+            {settings.enabled ? (
+              <Bell className="h-4.5 w-4.5" strokeWidth={1.65} />
+            ) : (
+              <BellOff className="h-4.5 w-4.5" strokeWidth={1.65} />
+            )}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-[#14243A]">Alarm</p>
+            <p className="text-sm font-semibold text-[#14243A]">Study Alarm</p>
             <p className="text-xs text-[#667085]">
-              {settings.enabled ? 'On' : 'Off'}
+              {settings.enabled ? 'Active' : 'Off'} · {formattedTime}
             </p>
           </div>
           <button
@@ -316,7 +322,7 @@ export const NewsView: React.FC = () => {
             aria-checked={settings.enabled}
             onClick={toggleReminder}
             className={`h-7 w-12 shrink-0 rounded-full p-1 transition-colors ${
-              settings.enabled ? 'bg-[#32845A]' : 'bg-[#CBD5E1]'
+              settings.enabled ? 'bg-[#14243A]' : 'bg-[#E9EBEF]'
             }`}
           >
             <span
@@ -327,23 +333,23 @@ export const NewsView: React.FC = () => {
           </button>
         </div>
 
-        <p className="mb-2 mt-5 text-xs font-semibold uppercase tracking-wide text-[#667085]">
-          Alarm time · {formattedTime}
+        <p className="mb-2 mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#667085]">
+          Select Time · <span className="font-mono-tabular text-[#14243A]">{formattedTime}</span>
         </p>
         <TimeWheelPicker
           value={settings.time}
           onChange={(time) => updateSettings({ time })}
         />
 
-        <div className="mt-3 rounded-2xl border border-[#E9EBEF] px-4 py-4">
+        <div className="mt-4 pt-4 border-t border-[#E9EBEF]">
           <div className="flex items-center justify-between gap-2">
-            <span className="flex items-center gap-2 text-sm font-medium text-[#475569]">
-              <CalendarDays className="h-4 w-4 text-[#0A84FF]" />
+            <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#5578A8]">
+              <CalendarDays className="h-4 w-4" strokeWidth={1.65} />
               Repeat
             </span>
-            <span className="text-sm font-semibold text-[#14243A]">{repeatSummary}</span>
+            <span className="text-xs font-medium text-[#14243A]">{repeatSummary}</span>
           </div>
-          <div className="mt-3 flex items-center justify-between gap-1 border-t border-[#E9EBEF] pt-3">
+          <div className="mt-3 flex items-center justify-between gap-1.5">
             {weekDays.map((day, index) => {
               const selected = settings.repeatDays.includes(index);
               return (
@@ -353,10 +359,10 @@ export const NewsView: React.FC = () => {
                   aria-label={day.name}
                   aria-pressed={selected}
                   onClick={() => toggleRepeatDay(index)}
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
                     selected
-                      ? 'bg-[#0A84FF] text-white'
-                      : 'bg-[#EEF0F4] text-[#667085] hover:bg-[#DBEAFE]'
+                      ? 'bg-[#14243A] text-[#FAF9F6]'
+                      : 'border border-[#E2E5EB] bg-[#FAF9F6] text-[#667085] hover:bg-[#E9EBEF] hover:text-[#14243A]'
                   }`}
                 >
                   {day.short}
@@ -367,15 +373,18 @@ export const NewsView: React.FC = () => {
         </div>
 
         {statusMessage && (
-          <p role="status" className="mt-3 text-xs font-medium text-[#475569]">
+          <p role="status" className="mt-4 pt-3 border-t border-[#E9EBEF] text-xs font-medium text-[#667085]">
             {statusMessage}
           </p>
         )}
       </section>
 
       {reminderVisible && (
-        <div className="mt-4 rounded-2xl border border-[#F5D99A] bg-[#FFFAEB] p-4">
-          <p className="text-sm font-semibold text-[#7A4B00]">Time for your daily practice</p>
+        <div className="mt-4 rounded-xl border border-[#C5A46D] bg-white p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#C5A46D] mb-0.5">
+            Scheduled Reminder
+          </p>
+          <p className="text-sm font-semibold text-[#14243A]">Time for your daily practice</p>
         </div>
       )}
     </div>
