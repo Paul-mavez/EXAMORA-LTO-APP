@@ -1,5 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, BookOpen, Check, ChevronRight, RotateCcw, X } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  BookOpen,
+  Bookmark,
+  Check,
+  RotateCcw,
+  X,
+} from 'lucide-react';
 import { REVIEWER_CATEGORIES, REVIEWER_QUESTIONS } from '../../data/local/reviewerDatabase';
 import { ReviewerCategory, ReviewerQuestion } from '../../domain/model/reviewerModels';
 import { CategoryBadge } from '../../ui/components/CategoryBadge';
@@ -7,6 +15,11 @@ import { RoadSignIllustration } from '../../ui/components/RoadSignIllustration';
 
 const WHEEL_ITEM_HEIGHT = 44;
 const QUIZ_SESSION_STORAGE_KEY = 'examora_active_quiz_session_v1';
+
+interface QuizViewProps {
+  bookmarkedQuestionIds: string[];
+  onToggleBookmark: (questionId: string) => void;
+}
 
 interface SavedQuizSession {
   stage: 'CATEGORY_SELECT' | 'READY_SETUP' | 'QUIZ_ACTIVE' | 'QUIZ_RESULT';
@@ -27,7 +40,10 @@ const loadSavedQuizSession = (): SavedQuizSession | null => {
   }
 };
 
-export const QuizView: React.FC = () => {
+export const QuizView: React.FC<QuizViewProps> = ({
+  bookmarkedQuestionIds,
+  onToggleBookmark,
+}) => {
   const savedSession = useRef<SavedQuizSession | null>(loadSavedQuizSession()).current;
 
   const [stage, setStage] = useState<'CATEGORY_SELECT' | 'READY_SETUP' | 'QUIZ_ACTIVE' | 'QUIZ_RESULT'>(
@@ -133,44 +149,62 @@ export const QuizView: React.FC = () => {
   if (stage === 'CATEGORY_SELECT') {
     return (
       <div className="w-full max-w-md mx-auto px-4 pt-9 pb-32 min-h-screen text-[#14243A]">
-        <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#5578A8]">
-          Practice Assessment
-        </p>
-        <h1 className="mb-1.5 font-display text-3xl font-bold tracking-[-0.02em] text-[#14243A]">
-          LTO Driver Exam
-        </h1>
-        <p className="mb-6 text-sm text-[#667085] leading-[1.6]">
-          Select an examination category to begin.
-        </p>
+        <section className="relative mb-5 overflow-hidden rounded-[26px] bg-[#14243A] p-5 text-white">
+          <div
+            aria-hidden="true"
+            className="absolute -right-10 -top-12 h-40 w-40 rounded-full border-[24px] border-white/[0.06]"
+          />
+          <p className="relative mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#C5A46D]">
+            Examora
+          </p>
+          <h1 className="relative font-display text-[26px] font-bold leading-tight tracking-[-0.03em]">
+            LTO Driver Exam Reviewer
+          </h1>
+          <p className="relative mt-2 max-w-[260px] text-xs leading-relaxed text-white/70">
+            You’re closer than you think. Practice at your pace and build confidence for the road.
+          </p>
+          <div className="relative mt-4 border-t border-white/10 pt-3">
+            <p className="text-[11px] leading-relaxed text-white/75">
+              Explore{' '}
+              <span className="font-semibold text-white">{REVIEWER_CATEGORIES.length} subjects</span>
+              {' '}with{' '}
+              <span className="font-semibold text-white">
+                {REVIEWER_QUESTIONS.length} practice questions
+              </span>
+              .
+            </p>
+          </div>
+        </section>
 
-        <div className="overflow-hidden rounded-xl border border-[#E2E5EB] bg-white divide-y divide-[#E9EBEF]">
+        <div className="grid grid-cols-2 gap-3">
           {REVIEWER_CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               type="button"
               onClick={() => handleSelectCategory(cat)}
-              className="group flex w-full items-center justify-between gap-3.5 p-4 text-left transition-colors hover:bg-[#FAF9F6] active:bg-[#E9EBEF]/50"
+              style={{ borderTopColor: cat.accentColor }}
+              className="group flex min-h-[174px] flex-col items-start rounded-2xl border border-[#E2E5EB] border-t-[3px] bg-white p-3.5 text-left shadow-[0_3px_12px_rgba(20,36,58,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(20,36,58,0.09)] active:translate-y-0"
             >
-              <div className="flex items-center gap-3.5 min-w-0">
-                <CategoryBadge type={cat.iconType} size="md" />
-                <div className="min-w-0">
-                  <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug text-[#14243A]">
-                    {cat.title}
-                  </h3>
-                  <div className="mt-1 flex items-center gap-1.5 text-xs text-[#667085] truncate">
-                    <span className="truncate">{cat.subtitle}</span>
-                    <span aria-hidden="true">·</span>
-                    <span className="font-mono-tabular font-medium text-[#5578A8] shrink-0">
-                      {cat.questionCount} questions
-                    </span>
-                  </div>
-                </div>
+              <div className="flex w-full items-start justify-between gap-2">
+                <CategoryBadge type={cat.iconType} size="sm" />
+                <ArrowUpRight
+                  className="mt-1 h-4 w-4 shrink-0 text-[#98A2B3] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#14243A]"
+                  strokeWidth={1.75}
+                />
               </div>
-
-              <ChevronRight
-                className="h-4 w-4 shrink-0 text-[#667085] transition-transform group-hover:translate-x-0.5 group-hover:text-[#14243A]"
-                strokeWidth={1.75}
-              />
+              <div className="mt-3 min-w-0">
+                <h2 className="line-clamp-3 text-[13px] font-bold leading-snug text-[#14243A]">
+                  {cat.title}
+                </h2>
+                <p className="mt-1 line-clamp-2 text-[10px] leading-relaxed text-[#667085]">
+                  {cat.subtitle}
+                </p>
+              </div>
+              <div className="mt-auto pt-3">
+                <span className="inline-flex rounded-full bg-[#F0F4F8] px-2.5 py-1 font-mono-tabular text-[10px] font-semibold text-[#5578A8]">
+                  {cat.questionCount} questions
+                </span>
+              </div>
             </button>
           ))}
         </div>
@@ -279,6 +313,7 @@ export const QuizView: React.FC = () => {
     const currentQ = activeQuestions[currentIdx];
     const userChoiceId = selectedAnswers[currentQ.id];
     const isAnswered = Boolean(userChoiceId);
+    const isBookmarked = bookmarkedQuestionIds.includes(currentQ.id);
 
     const answeredIds = Object.keys(selectedAnswers);
     const answeredCount = answeredIds.length;
@@ -311,7 +346,7 @@ export const QuizView: React.FC = () => {
       <div className="w-full max-w-md mx-auto px-4 pb-[92px] text-[#14243A] h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between bg-[#FAF9F6]">
         {/* Compact Editorial Top Header */}
         <div className="-mx-4 shrink-0 border-b border-[#E2E5EB] bg-white px-4 pb-3.5 pt-5">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setStage('CATEGORY_SELECT')}
@@ -319,9 +354,25 @@ export const QuizView: React.FC = () => {
             >
               Exit
             </button>
-            <h2 className="truncate font-display text-sm font-semibold text-[#14243A]">
+            <h2 className="min-w-0 flex-1 truncate font-display text-sm font-semibold text-[#14243A]">
               {selectedCategory.title}
             </h2>
+            <button
+              type="button"
+              onClick={() => onToggleBookmark(currentQ.id)}
+              aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark question'}
+              aria-pressed={isBookmarked}
+              className={`shrink-0 rounded-md border px-2.5 py-1.5 text-xs font-semibold transition-colors ${
+                isBookmarked
+                  ? 'border-[#5578A8]/40 bg-[#5578A8]/10 text-[#355C8A]'
+                  : 'border-[#E2E5EB] bg-[#FAF9F6] text-[#667085] hover:text-[#14243A]'
+              }`}
+            >
+              <span className="flex items-center gap-1">
+                <Bookmark className={`h-3.5 w-3.5 ${isBookmarked ? 'fill-current' : ''}`} />
+                {isBookmarked ? 'Saved' : 'Save'}
+              </span>
+            </button>
           </div>
 
           <div className="mb-2 mt-3.5 flex items-baseline justify-between gap-2">

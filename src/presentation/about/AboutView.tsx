@@ -7,17 +7,12 @@ import {
   Mail,
   RefreshCw,
   Send,
-  Sparkles,
   Star,
   WifiOff,
   X,
 } from 'lucide-react';
 
-interface AboutViewProps {
-  onReplayOnboarding?: () => void;
-}
-
-export const AboutView: React.FC<AboutViewProps> = ({ onReplayOnboarding }) => {
+export const AboutView: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [refreshToast, setRefreshToast] = useState<string | null>(null);
 
@@ -231,26 +226,6 @@ export const AboutView: React.FC<AboutViewProps> = ({ onReplayOnboarding }) => {
             </span>
             <ChevronRight className="h-4 w-4 shrink-0 text-[#667085]" strokeWidth={1.75} />
           </button>
-          {onReplayOnboarding && (
-            <button
-              type="button"
-              onClick={onReplayOnboarding}
-              className="flex min-h-14 w-full items-center gap-3 py-3 text-left transition-colors hover:bg-[#FAF9F6]"
-            >
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#E2E5EB] bg-[#FAF9F6] text-[#5578A8]">
-                <Sparkles className="h-4 w-4" strokeWidth={1.65} />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-sm font-semibold text-[#14243A]">
-                  Welcome &amp; Setup Guide
-                </span>
-                <span className="mt-0.5 block text-xs text-[#667085]">
-                  Replay the onboarding walkthrough
-                </span>
-              </span>
-              <ChevronRight className="h-4 w-4 shrink-0 text-[#667085]" strokeWidth={1.75} />
-            </button>
-          )}
         </div>
       </section>
 
