@@ -43,7 +43,6 @@ export const QuizView: React.FC = () => {
   });
   const [questionCount, setQuestionCount] = useState<number>(() => savedSession?.questionCount || 10);
   const wheelRef = useRef<HTMLDivElement | null>(null);
-
   // Active quiz states
   const [activeQuestions, setActiveQuestions] = useState<ReviewerQuestion[]>(
     () => savedSession?.activeQuestions || []
@@ -133,39 +132,42 @@ export const QuizView: React.FC = () => {
     };
   };
 
-  // 1. STAGE: CATEGORY SELECTOR (Matches Screenshot IMG_4102)
+  // 1. STAGE: CATEGORY SELECTOR
   if (stage === 'CATEGORY_SELECT') {
     return (
-      <div className="w-full max-w-md mx-auto px-4 pt-10 pb-28 text-white min-h-screen">
-        <h1 className="text-3xl font-extrabold tracking-tight text-white mb-6">
+      <div className="w-full max-w-md mx-auto px-4 pt-8 pb-32 min-h-screen text-[#14243A]">
+        <h1 className="mb-2 font-display text-3xl font-bold tracking-tight text-[#14243A]">
           LTO Driver Exam
         </h1>
+        <p className="mb-5 text-sm text-[#667085]">
+          Choose a category to start your quiz.
+        </p>
 
-        <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl overflow-hidden divide-y divide-[#2C2C2E]/70 shadow-2xl">
+        <div className="overflow-hidden rounded-3xl border border-[#E9EBEF] bg-white shadow-sm divide-y divide-[#E9EBEF]">
           {REVIEWER_CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               type="button"
               onClick={() => handleSelectCategory(cat)}
-              className="w-full p-4 text-left flex items-center justify-between gap-3.5 hover:bg-[#2C2C2E]/40 active:bg-[#2C2C2E]/60 transition-colors group"
+              className="group flex w-full items-center justify-between gap-3.5 p-4 text-left transition-colors hover:bg-[#F5F9FF] active:bg-[#EFF6FF]"
             >
               <div className="flex items-center gap-3.5 min-w-0">
                 <CategoryBadge type={cat.iconType} size="md" />
                 <div className="min-w-0">
-                  <h3 className="text-base font-semibold text-white group-hover:text-[#0A84FF] transition-colors truncate">
+                  <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug text-[#14243A] transition-colors group-hover:text-[#0A84FF]">
                     {cat.title}
                   </h3>
-                  <p className="text-xs text-[#8E8E93] line-clamp-1 mt-0.5">
+                  <p className="mt-0.5 line-clamp-1 text-xs text-[#667085]">
                     {cat.subtitle}
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs text-[#0A84FF] font-medium mt-1">
+                  <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-[#0A84FF]">
                     <HelpCircle className="w-3.5 h-3.5" />
                     <span>{cat.questionCount} questions</span>
                   </div>
                 </div>
               </div>
 
-              <ChevronRight className="w-5 h-5 text-[#8E8E93] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+              <ChevronRight className="h-5 w-5 shrink-0 text-[#98A2B3] transition-transform group-hover:translate-x-0.5" />
             </button>
           ))}
         </div>
@@ -173,7 +175,7 @@ export const QuizView: React.FC = () => {
     );
   }
 
-  // 2. STAGE: READY? QUESTION COUNT PICKER (Matches Screenshot IMG_4103, Responsive & Non-Scrollable Page)
+  // 2. STAGE: QUIZ SETUP
   if (stage === 'READY_SETUP') {
     const allCounts = Array.from(
       { length: selectedCategory.questionCount },
@@ -181,51 +183,47 @@ export const QuizView: React.FC = () => {
     );
 
     return (
-      <div className="w-full max-w-md mx-auto px-4 pt-7 pb-[96px] text-white h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between">
+      <div className="w-full max-w-md mx-auto px-4 pt-8 pb-32 min-h-screen text-[#14243A]">
         <div>
-          {/* Top Bar with circular back button and centered title */}
-          <div className="relative flex items-center justify-center py-1.5 mb-3">
+          <div className="mb-6 flex items-center gap-3">
             <button
               type="button"
               onClick={() => setStage('CATEGORY_SELECT')}
-              className="absolute left-0 w-9 h-9 rounded-full bg-[#1C1C1E] border border-[#2C2C2E] flex items-center justify-center text-white hover:bg-[#2C2C2E] transition-colors"
+              aria-label="Back to categories"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#E9EBEF] bg-white text-[#475569] transition-colors hover:bg-[#F5F9FF]"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="h-5 w-5" />
             </button>
-            <h2 className="text-sm sm:text-base font-semibold text-white truncate max-w-[75%]">
+            <h2 className="truncate text-base font-semibold text-[#14243A]">
               {selectedCategory.title}
             </h2>
           </div>
 
-          {/* Center visual emblem & "Ready?" */}
-          <div className="flex flex-col items-center text-center mt-2 sm:mt-4 mb-4 sm:mb-6">
-            <CategoryBadge type={selectedCategory.iconType} size="lg" className="mb-3 sm:mb-4 shadow-2xl" />
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-1 tracking-tight">Ready?</h1>
-            <p className="text-xs sm:text-sm text-[#8E8E93]">
-              Select how many questions you'd like to answer
-            </p>
+          <div className="mb-5 flex items-center gap-4 rounded-2xl border border-[#BFDBFE] bg-white p-4">
+            <CategoryBadge type={selectedCategory.iconType} size="md" />
+            <div>
+              <h1 className="text-lg font-bold tracking-tight text-[#14243A]">Ready?</h1>
+              <p className="mt-0.5 text-sm text-[#667085]">
+                Choose how many questions to answer.
+              </p>
+            </div>
           </div>
 
-          {/* "Number of Questions" Scrollable iOS Drum Wheel (Matches IMG_4103) */}
-          <div className="mt-2 sm:mt-4">
-            <h3 className="text-center text-sm sm:text-base font-semibold text-white mb-3">
+          <div className="mt-4">
+            <h3 className="mb-3 text-center text-sm font-semibold text-[#14243A]">
               Number of Questions
             </h3>
 
-            <div className="bg-[#1C1C1E] rounded-2xl px-3 py-2 shadow-2xl relative overflow-hidden">
-              {/* Center Highlight Pill Bar (Behind Selected Row) */}
+            <div className="relative overflow-hidden rounded-2xl border border-[#E9EBEF] bg-white px-3 py-2 shadow-sm">
               <div
-                className="absolute left-3 right-3 top-1/2 -translate-y-1/2 h-[44px] rounded-xl bg-[#2C2C2E] pointer-events-none"
+                className="pointer-events-none absolute left-3 right-3 top-1/2 h-[44px] -translate-y-1/2 rounded-xl border border-[#BFDBFE] bg-[#EFF6FF]"
                 aria-hidden="true"
               />
-
-              {/* Vertical Scrollable Wheel Container (3 visible rows: 3 * 44px = 132px) */}
               <div
                 ref={wheelRef}
                 onScroll={handleWheelScroll}
                 className="relative z-10 h-[132px] overflow-y-scroll snap-y snap-mandatory no-scrollbar select-none"
               >
-                {/* Top 1-row spacer so item 1 can snap to center */}
                 <div className="h-[44px] shrink-0" />
 
                 {allCounts.map((num) => {
@@ -238,10 +236,10 @@ export const QuizView: React.FC = () => {
                       onClick={() => scrollToQuestionCount(num)}
                       className={`w-full h-[44px] snap-center flex items-center justify-center transition-all duration-150 ${
                         isSelected
-                          ? 'text-white text-lg sm:text-xl font-medium'
+                          ? 'text-[#0A84FF] text-lg sm:text-xl font-semibold'
                           : distance === 1
-                          ? 'text-[#8E8E93]/75 text-base sm:text-lg font-normal'
-                          : 'text-[#8E8E93]/30 text-sm sm:text-base font-normal'
+                          ? 'text-[#667085] text-base sm:text-lg font-normal'
+                          : 'text-[#98A2B3]/60 text-sm sm:text-base font-normal'
                       }`}
                     >
                       {num} {num === 1 ? 'question' : 'questions'}
@@ -249,19 +247,17 @@ export const QuizView: React.FC = () => {
                   );
                 })}
 
-                {/* Bottom 1-row spacer so max item can snap to center */}
                 <div className="h-[44px] shrink-0" />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Start Quiz Button Above the Bottom Navigation Bar with Padding */}
-        <div className="pt-3 pb-2 shrink-0">
+        <div className="mt-5">
           <button
             type="button"
             onClick={handleStartQuiz}
-            className="w-full py-3.5 sm:py-4 rounded-2xl bg-[#0A84FF] hover:bg-[#0071E3] active:scale-[0.99] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#0A84FF]/25 transition-all"
+            className="min-h-12 w-full rounded-xl bg-[#0A84FF] px-4 py-3 text-sm font-bold text-white shadow-sm transition-colors hover:bg-[#006FE6]"
           >
             Start Quiz
           </button>
@@ -270,7 +266,7 @@ export const QuizView: React.FC = () => {
     );
   }
 
-  // 3. STAGE: ACTIVE QUIZ (Non-Scrollable, Responsive on All Devices, With Explanation & Conditional Button)
+  // 3. STAGE: ACTIVE QUIZ
   if (stage === 'QUIZ_ACTIVE' && activeQuestions.length > 0) {
     const currentQ = activeQuestions[currentIdx];
     const userChoiceId = selectedAnswers[currentQ.id];
@@ -287,8 +283,16 @@ export const QuizView: React.FC = () => {
     }, 0);
     const livePct = answeredCount > 0 ? Math.round((correctSoFar / answeredCount) * 100) : 0;
     const isPassingSoFar = answeredCount > 0 && livePct >= 80;
-    const scoreColorClass = isPassingSoFar ? 'text-[#30D158]' : 'text-[#FF453A]';
-    const scoreBadgeBgClass = isPassingSoFar ? 'bg-[#30D158]' : 'bg-[#FF453A]';
+    const scoreColorClass = isPassingSoFar ? 'text-[#32845A]' : 'text-[#667085]';
+    const scoreBadgeBgClass = isPassingSoFar
+      ? 'bg-[#DCFCE7] text-[#15803D]'
+      : 'bg-[#EFF6FF] text-[#475569]';
+
+    const handlePrevious = () => {
+      if (currentIdx > 0) {
+        setCurrentIdx((prev) => prev - 1);
+      }
+    };
 
     const handleNext = () => {
       if (currentIdx < activeQuestions.length - 1) {
@@ -301,54 +305,56 @@ export const QuizView: React.FC = () => {
     const progressPct = ((currentIdx + 1) / activeQuestions.length) * 100;
 
     return (
-      <div className="w-full max-w-md mx-auto px-4 pb-[90px] text-white h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between select-none">
-        {/* Top Dark Header Block (Exit Pill + Category Title + Question Progress + Live Score) */}
-        <div className="-mx-4 px-4 pt-6 pb-3 bg-[#161618] border-b border-[#242426] shrink-0">
-          {/* Row 1: Exit button & Category title */}
+      <div className="w-full max-w-md mx-auto px-4 pb-[100px] text-[#14243A] h-[100dvh] max-h-[100dvh] overflow-hidden flex flex-col justify-between">
+        <div className="-mx-4 shrink-0 border-b border-[#E9EBEF] bg-white px-4 pb-4 pt-6">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setStage('CATEGORY_SELECT')}
-              className="px-4 py-1.5 rounded-full bg-[#242426] border border-[#38383A] text-[#FF453A] text-xs sm:text-sm font-medium hover:bg-[#2C2C2E] active:scale-95 transition-all shrink-0"
+              className="shrink-0 rounded-xl border border-[#E9EBEF] bg-[#F5F9FF] px-3.5 py-2 text-xs font-semibold text-[#475569] transition-colors hover:bg-[#EFF6FF]"
             >
               Exit
             </button>
-            <h2 className="text-sm sm:text-base font-semibold text-white truncate">
+            <h2 className="truncate text-sm font-semibold text-[#14243A]">
               {selectedCategory.title}
             </h2>
           </div>
 
-          {/* Row 2: Question X of Y & Live Score */}
-          <div className="mt-2.5 mb-2 flex items-end justify-between">
-            <span className="text-xs sm:text-sm font-medium text-white">
+          <div className="mb-2 mt-4 flex items-end justify-between">
+            <span className="text-sm font-semibold text-[#14243A]">
               Question {currentIdx + 1} of {activeQuestions.length}
             </span>
 
             <div className={`flex flex-col items-end leading-tight ${scoreColorClass}`}>
-              <div className="flex items-center gap-1 text-xs sm:text-sm font-medium">
+              <div className="flex items-center gap-1.5 text-xs font-semibold">
                 <span
-                  className={`w-3.5 h-3.5 rounded-full ${scoreBadgeBgClass} text-black flex items-center justify-center shrink-0`}
+                  className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full ${scoreBadgeBgClass}`}
                 >
-                  <Check className="w-2.5 h-2.5 stroke-[3.5]" />
+                  <Check className="h-2.5 w-2.5 stroke-[3.5]" />
                 </span>
                 <span>
                   Score: {correctSoFar}/{answeredCount}
                 </span>
               </div>
-              <span className="text-[11px] font-medium">{livePct}%</span>
+              <span className="text-[11px] font-medium">{livePct}% correct</span>
             </div>
           </div>
 
-          {/* Row 3: Blue Progress Bar */}
-          <div className="w-full h-1.5 bg-[#2C2C2E] rounded-full overflow-hidden">
+          <div
+            className="h-1.5 w-full overflow-hidden rounded-full bg-[#E9EBEF]"
+            role="progressbar"
+            aria-label="Quiz progress"
+            aria-valuemin={0}
+            aria-valuemax={activeQuestions.length}
+            aria-valuenow={currentIdx + 1}
+          >
             <div
-              className="h-full bg-[#0A84FF] rounded-full transition-all duration-300"
+              className="h-full rounded-full bg-[#0A84FF] transition-all duration-300"
               style={{ width: `${progressPct}%` }}
             />
           </div>
         </div>
 
-        {/* Question Body Directly on Pure Black Canvas — Top-Aligned & Non-Scrollable */}
         <div className="flex-1 min-h-0 flex flex-col justify-between py-2">
           <div className="flex-1 min-h-0 flex flex-col justify-start pt-2">
             {currentQ.imageResource && (
@@ -363,7 +369,7 @@ export const QuizView: React.FC = () => {
               />
             )}
 
-            <h3 className="text-[clamp(0.88rem,1.95vh,1.05rem)] font-medium text-white leading-snug mb-3">
+            <h3 className="mb-3 text-[clamp(0.88rem,1.95vh,1.05rem)] font-medium leading-snug text-[#14243A]">
               {currentQ.question}
             </h3>
 
@@ -374,24 +380,24 @@ export const QuizView: React.FC = () => {
                 const isCorrect = choice.id === currentQ.correctChoiceId;
 
                 let containerClasses =
-                  'bg-[#1C1C1E] border-[#2C2C2E] text-white hover:bg-[#242426]';
+                  'border-[#E9EBEF] bg-white text-[#14243A] hover:bg-[#F5F9FF]';
                 let letterBadgeClasses =
-                  'border-2 border-[#48484A] text-[#8E8E93]';
-                let textClasses = 'text-white';
+                  'border-2 border-[#CBD5E1] text-[#667085]';
+                let textClasses = 'text-[#14243A]';
 
                 if (isAnswered) {
                   if (isCorrect) {
-                    containerClasses = 'bg-[#0E2415] border-[#30D158]';
-                    letterBadgeClasses = 'border-2 border-[#30D158] text-[#30D158]';
-                    textClasses = 'text-[#EBEBF5]/90';
+                    containerClasses = 'bg-[#F0FDF4] border-[#86EFAC]';
+                    letterBadgeClasses = 'border-2 border-[#22C55E] text-[#15803D]';
+                    textClasses = 'text-[#166534]';
                   } else if (isSelected && !isCorrect) {
-                    containerClasses = 'bg-[#2A1215] border-[#FF453A]';
-                    letterBadgeClasses = 'border-2 border-[#FF453A] text-[#FF453A]';
-                    textClasses = 'text-[#EBEBF5]/80';
+                    containerClasses = 'bg-[#FEF2F2] border-[#FECACA]';
+                    letterBadgeClasses = 'border-2 border-[#EF4444] text-[#B91C1C]';
+                    textClasses = 'text-[#991B1B]';
                   } else {
-                    containerClasses = 'bg-[#1C1C1E] border-[#2C2C2E]';
-                    letterBadgeClasses = 'border-2 border-[#3A3A3C] text-[#636366]';
-                    textClasses = 'text-[#8E8E93]';
+                    containerClasses = 'bg-[#F8FAFC] border-[#E9EBEF]';
+                    letterBadgeClasses = 'border-2 border-[#CBD5E1] text-[#98A2B3]';
+                    textClasses = 'text-[#667085]';
                   }
                 }
 
@@ -405,23 +411,23 @@ export const QuizView: React.FC = () => {
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <span
-                        className={`w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center shrink-0 ${letterBadgeClasses}`}
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${letterBadgeClasses}`}
                       >
                         {choice.letter}
                       </span>
-                      <span className={`text-[clamp(0.78rem,1.75vh,0.9rem)] font-normal leading-snug line-clamp-2 ${textClasses}`}>
+                      <span className={`line-clamp-2 text-[clamp(0.78rem,1.75vh,0.9rem)] font-normal leading-snug ${textClasses}`}>
                         {choice.text}
                       </span>
                     </div>
 
                     {isAnswered && isCorrect && (
-                      <span className="w-5 h-5 rounded-full bg-[#30D158] text-black flex items-center justify-center shrink-0">
-                        <Check className="w-3 h-3 stroke-[3]" />
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#22C55E] text-white">
+                        <Check className="h-3 w-3 stroke-[3]" />
                       </span>
                     )}
                     {isAnswered && isSelected && !isCorrect && (
-                      <span className="w-5 h-5 rounded-full bg-[#FF453A] text-black flex items-center justify-center shrink-0">
-                        <X className="w-3 h-3 stroke-[3]" />
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#EF4444] text-white">
+                        <X className="h-3 w-3 stroke-[3]" />
                       </span>
                     )}
                   </button>
@@ -431,32 +437,39 @@ export const QuizView: React.FC = () => {
 
             {/* Explanation Callout — Appears Once Answered */}
             {isAnswered && (
-              <div className="mt-2 px-3 py-2 rounded-xl bg-[#20170A] border border-[#422E14] text-[#E0B88F] shrink-0">
-                <div className="flex items-center gap-1 font-bold text-[11px] text-[#FF9500] mb-0.5">
+              <div className="mt-2 shrink-0 rounded-xl border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-2 text-[#0369A1]">
+                <div className="mb-0.5 flex items-center gap-1 text-[11px] font-bold text-[#0A84FF]">
                   <span>💡</span>
                   <span>Explanation</span>
                 </div>
-                <p className="text-[11px] leading-snug text-[#D2B48C] line-clamp-2">
+                <p className="line-clamp-2 text-[11px] leading-snug text-[#475569]">
                   {currentQ.explanation}
                 </p>
               </div>
             )}
           </div>
 
-          {/* Bottom Action Button — Appears ONLY Once User Taps an Answer */}
-          {isAnswered ? (
-            <div className="pt-2 pb-1 shrink-0">
+          <div className="grid shrink-0 grid-cols-2 gap-3 pt-2 pb-1">
+            {currentIdx > 0 && (
               <button
                 type="button"
-                onClick={handleNext}
-                className="w-full py-3 rounded-2xl bg-[#0A84FF] hover:bg-[#0071E3] active:scale-[0.99] text-white font-semibold text-sm sm:text-base shadow-lg transition-all"
+                onClick={handlePrevious}
+                className="min-h-11 rounded-xl border border-[#BFDBFE] bg-white px-3 text-sm font-semibold text-[#475569] transition-colors hover:bg-[#F5F9FF]"
               >
-                {currentIdx < activeQuestions.length - 1 ? 'Next Question' : 'Finish Quiz'}
+                Previous
               </button>
-            </div>
-          ) : (
-            <div className="h-2 shrink-0" />
-          )}
+            )}
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={!isAnswered}
+              className={`min-h-11 rounded-xl bg-[#0A84FF] px-3 text-sm font-semibold text-white transition-colors hover:bg-[#006FE6] disabled:cursor-not-allowed disabled:bg-[#BFDBFE] ${
+                currentIdx === 0 ? 'col-span-2' : ''
+              }`}
+            >
+              {currentIdx < activeQuestions.length - 1 ? 'Next Question' : 'Finish Quiz'}
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -465,28 +478,28 @@ export const QuizView: React.FC = () => {
   // 4. STAGE: QUIZ RESULT
   const score = calculateScore();
   return (
-    <div className="w-full max-w-md mx-auto px-4 pt-6 pb-28 text-white min-h-screen flex flex-col justify-between">
+    <div className="w-full max-w-md mx-auto px-4 pt-8 pb-32 min-h-screen text-[#14243A] flex flex-col justify-between">
       <div>
         <div className="text-center py-6">
           <CategoryBadge type={selectedCategory.iconType} size="lg" className="mx-auto mb-4" />
-          <h1 className="text-3xl font-extrabold text-white mb-2">Quiz Complete!</h1>
-          <p className="text-sm text-[#8E8E93]">{selectedCategory.title}</p>
+          <h1 className="mb-2 text-3xl font-extrabold text-[#14243A]">Quiz Complete!</h1>
+          <p className="text-sm text-[#667085]">{selectedCategory.title}</p>
         </div>
 
-        <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl p-6 text-center shadow-xl space-y-4">
-          <p className="text-5xl font-black text-[#0A84FF] font-mono-tabular">
+        <div className="space-y-4 rounded-3xl border border-[#E9EBEF] bg-white p-6 text-center shadow-sm">
+          <p className="font-mono-tabular text-5xl font-black text-[#0A84FF]">
             {score.pct}%
           </p>
-          <p className="text-base font-semibold text-white">
+          <p className="text-base font-semibold text-[#14243A]">
             {score.correct} out of {score.total} correct
           </p>
-          <div className="w-full bg-[#2C2C2E] h-2.5 rounded-full overflow-hidden">
+          <div className="h-2.5 w-full overflow-hidden rounded-full bg-[#E9EBEF]">
             <div
               className="bg-[#0A84FF] h-full rounded-full transition-all duration-500"
               style={{ width: `${score.pct}%` }}
             />
           </div>
-          <p className="text-xs text-[#8E8E93]">
+          <p className="text-sm leading-relaxed text-[#667085]">
             {score.pct >= 80
               ? '🎉 Excellent work! You passed the passing score criteria for this quiz.'
               : 'Keep practicing! Review the explanations in the Study Guide to strengthen weak areas.'}
@@ -494,11 +507,11 @@ export const QuizView: React.FC = () => {
         </div>
       </div>
 
-      <div className="space-y-3 mt-6">
+      <div className="mt-6 space-y-3">
         <button
           type="button"
           onClick={handleStartQuiz}
-          className="w-full py-4 rounded-2xl bg-[#0A84FF] hover:bg-[#0071E3] text-white font-bold text-base flex items-center justify-center gap-2"
+          className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#0A84FF] py-3 text-base font-bold text-white transition-colors hover:bg-[#006FE6]"
         >
           <RotateCcw className="w-5 h-5" />
           Retake Quiz
@@ -506,7 +519,7 @@ export const QuizView: React.FC = () => {
         <button
           type="button"
           onClick={() => setStage('CATEGORY_SELECT')}
-          className="w-full py-3.5 rounded-2xl bg-[#1C1C1E] border border-[#2C2C2E] text-white font-semibold text-sm hover:bg-[#2C2C2E]"
+          className="w-full rounded-xl border border-[#BFDBFE] bg-white py-3.5 text-sm font-semibold text-[#475569] transition-colors hover:bg-[#F5F9FF]"
         >
           Choose Another Category
         </button>

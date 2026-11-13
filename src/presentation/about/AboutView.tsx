@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   BookOpen,
   Check,
+  ChevronRight,
   Gamepad2,
   Mail,
   RefreshCw,
@@ -57,218 +58,216 @@ export const AboutView: React.FC<AboutViewProps> = ({ onReplayOnboarding }) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 pt-10 pb-28 text-white min-h-screen">
-      {/* Title */}
-      <h1 className="text-3xl font-extrabold tracking-tight text-white mb-6">
-        About
-      </h1>
+    <div className="w-full max-w-md mx-auto px-4 pt-8 pb-32 min-h-screen text-[#14243A]">
+      <h1 className="font-display text-3xl font-bold tracking-tight mb-5">About</h1>
 
-      {/* App Squircle Emblem & Title (Pure Royal Blue Squircle Logo) */}
-      <div className="flex flex-col items-center text-center mb-8">
-        <div className="w-24 h-24 rounded-[22px] overflow-hidden shadow-2xl mb-4 bg-[#001F87] flex items-center justify-center">
-          <img
-            src="/assets/png/examora_logo.png"
-            alt="LTO Driver Exam Reviewer"
-            className="w-full h-full object-cover scale-[1.08]"
-            onError={(e) => {
-              const target = e.currentTarget;
-              target.style.display = 'none';
-            }}
-          />
+      <section className="mb-5 rounded-3xl border border-[#BFDBFE] bg-gradient-to-br from-white to-[#EFF6FF] p-5 shadow-sm">
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 shrink-0 overflow-hidden rounded-2xl border border-[#DBEAFE] bg-white p-1.5">
+            <img
+              src="/assets/png/examora_logo.png"
+              alt="LTO Driver Exam Reviewer"
+              className="h-full w-full object-contain"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#D8A43B]">
+              EXAMORA
+            </p>
+            <h2 className="mt-1 text-lg font-bold leading-tight text-[#14243A]">
+              LTO Driver Exam Reviewer
+            </h2>
+          </div>
         </div>
-
-        <h2 className="text-2xl font-black text-white tracking-tight mb-1.5">
-          LTO Driver Exam Reviewer
-        </h2>
-        <p className="text-xs text-[#8E8E93] max-w-xs leading-relaxed">
+        <p className="mt-4 text-sm leading-relaxed text-[#475569]">
           Your comprehensive guide to passing the LTO driver's license examination
         </p>
-      </div>
+      </section>
 
-      {/* Toast Notification */}
       {refreshToast && (
-        <div className="mb-4 p-3 rounded-2xl bg-[#0E2A47] border border-[#0A84FF]/40 text-xs text-[#0A84FF] font-semibold flex items-center gap-2 animate-in fade-in">
-          <Check className="w-4 h-4 text-[#34C759]" />
+        <div className="mb-5 flex items-center gap-2 rounded-2xl border border-[#86EFAC] bg-[#F0FDF4] p-3 text-xs font-semibold text-[#166534] animate-in fade-in">
+          <Check className="h-4 w-4 shrink-0" />
           <span>{refreshToast}</span>
         </div>
       )}
 
-      {/* 1. FEATURES CARD (Matches IMG_4107) */}
-      <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl p-5 mb-4 shadow-xl space-y-4">
-        <h3 className="text-base font-bold text-white">Features</h3>
-
-        <div className="flex items-start gap-3.5">
-          <Gamepad2 className="w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white">Interactive Quiz</h4>
-            <p className="text-xs text-[#8E8E93] mt-0.5">
+      <section className="mb-5">
+        <h3 className="mb-3 text-lg font-bold text-[#14243A]">Features</h3>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-2xl border border-[#E9EBEF] bg-white p-4">
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+              <Gamepad2 className="h-5 w-5" />
+            </div>
+            <h4 className="text-sm font-semibold text-[#14243A]">Interactive Quiz</h4>
+            <p className="mt-1 text-xs leading-relaxed text-[#667085]">
               Test your knowledge with customizable quizzes
             </p>
           </div>
-        </div>
-
-        <div className="flex items-start gap-3.5">
-          <BookOpen className="w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white">Study Guide</h4>
-            <p className="text-xs text-[#8E8E93] mt-0.5">
+          <div className="rounded-2xl border border-[#E9EBEF] bg-white p-4">
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+              <BookOpen className="h-5 w-5" />
+            </div>
+            <h4 className="text-sm font-semibold text-[#14243A]">Study Guide</h4>
+            <p className="mt-1 text-xs leading-relaxed text-[#667085]">
               Review all questions with detailed explanations
             </p>
           </div>
-        </div>
-
-        <div className="flex items-start gap-3.5">
-          <WifiOff className="w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white">Offline Access</h4>
-            <p className="text-xs text-[#8E8E93] mt-0.5">
+          <div className="rounded-2xl border border-[#E9EBEF] bg-white p-4">
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+              <WifiOff className="h-5 w-5" />
+            </div>
+            <h4 className="text-sm font-semibold text-[#14243A]">Offline Access</h4>
+            <p className="mt-1 text-xs leading-relaxed text-[#667085]">
               Study anywhere with cached questions
             </p>
           </div>
-        </div>
-
-        <div className="flex items-start gap-3.5">
-          <RefreshCw className="w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white">Auto Updates</h4>
-            <p className="text-xs text-[#8E8E93] mt-0.5">
+          <div className="rounded-2xl border border-[#E9EBEF] bg-white p-4">
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+              <RefreshCw className="h-5 w-5" />
+            </div>
+            <h4 className="text-sm font-semibold text-[#14243A]">Auto Updates</h4>
+            <p className="mt-1 text-xs leading-relaxed text-[#667085]">
               Questions are automatically updated from our servers
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* 2. INFORMATION CARD (Matches IMG_4107 & IMG_4108) */}
-      <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl p-5 mb-4 shadow-xl">
-        <h3 className="text-base font-bold text-white mb-3">Information</h3>
-        <div className="divide-y divide-[#2C2C2E]">
-          <div className="py-2.5 flex items-center justify-between text-xs">
-            <span className="text-[#8E8E93]">Version</span>
-            <span className="text-white font-medium">26 (1)</span>
+      <section className="mb-5 rounded-2xl border border-[#E9EBEF] bg-white p-5">
+        <h3 className="mb-2 text-lg font-bold text-[#14243A]">Information</h3>
+        <div className="divide-y divide-[#E9EBEF]">
+          <div className="flex items-center justify-between gap-4 py-3 text-sm">
+            <span className="text-[#667085]">Version</span>
+            <span className="font-semibold text-[#14243A]">26 (1)</span>
           </div>
-          <div className="py-2.5 flex items-center justify-between text-xs">
-            <span className="text-[#8E8E93]">Developer</span>
-            <span className="text-white font-medium">EXAMORA</span>
+          <div className="flex items-center justify-between gap-4 py-3 text-sm">
+            <span className="text-[#667085]">Developer</span>
+            <span className="font-semibold text-[#14243A]">EXAMORA</span>
           </div>
-          <div className="py-2.5 flex items-center justify-between text-xs">
-            <span className="text-[#8E8E93]">Last Updated</span>
-            <span className="text-white font-medium">Nov 12, 2026</span>
+          <div className="flex items-center justify-between gap-4 py-3 text-sm">
+            <span className="text-[#667085]">Last Updated</span>
+            <span className="font-semibold text-[#14243A]">Nov 12, 2026</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* 3. DISCLAIMER CARD (Matches IMG_4108) */}
-      <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl p-5 mb-4 shadow-xl">
-        <h3 className="text-base font-bold text-white mb-2">Disclaimer</h3>
-        <p className="text-xs text-[#8E8E93] leading-relaxed mb-2.5">
-          This app is designed to help you prepare for the LTO driver's license examination. While we strive to provide accurate and up-to-date information, please verify all information with official LTO guidelines and regulations. The developers are not responsible for any examination results.
+      <section className="mb-5 rounded-2xl border border-[#E9EBEF] bg-white p-5">
+        <h3 className="mb-2 text-lg font-bold text-[#14243A]">Disclaimer</h3>
+        <p className="mb-3 text-sm leading-relaxed text-[#475569]">
+          This app helps you prepare for the LTO exam. Check official LTO sources for current rules and requirements. Examora does not guarantee exam results.
         </p>
-        <p className="text-[11px] text-[#A3733A] bg-[#201608] border border-[#422E14] rounded-xl p-2.5 leading-normal">
+        <p className="rounded-xl border border-[#F3D28A] bg-[#FFF8E8] p-3 text-xs leading-relaxed text-[#7A5517]">
           Examora - LTO reviewer is an independent educational application and is not affiliated with or endorsed by the Land Transportation Office (LTO).
         </p>
-      </div>
+      </section>
 
-      {/* 4. SUPPORT CARD (Matches IMG_4108) */}
-      <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl p-5 mb-6 shadow-xl space-y-4">
-        <h3 className="text-base font-bold text-white">Support</h3>
-
-        <button
-          type="button"
-          onClick={handleRefresh}
-          className="w-full text-left flex items-start gap-3.5 hover:opacity-80 transition-opacity"
-        >
-          <RefreshCw
-            className={`w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5 ${
-              refreshing ? 'animate-spin' : ''
-            }`}
-          />
-          <div>
-            <h4 className="text-sm font-semibold text-white">Refresh Questions</h4>
-            <p className="text-xs text-[#8E8E93] mt-0.5">
-              Update your question database with latest content
-            </p>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setShowSupportModal(true)}
-          className="w-full text-left flex items-start gap-3.5 hover:opacity-80 transition-opacity"
-        >
-          <Mail className="w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white">Contact Support</h4>
-            <p className="text-xs text-[#8E8E93] mt-0.5">
-              Get help with issues or share your feedback
-            </p>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setShowRatingModal(true)}
-          className="w-full text-left flex items-start gap-3.5 hover:opacity-80 transition-opacity"
-        >
-          <Star className="w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-semibold text-white">Rate This App</h4>
-            <p className="text-xs text-[#8E8E93] mt-0.5">
-              Help us improve by leaving a review
-            </p>
-          </div>
-        </button>
-
-        {onReplayOnboarding && (
+      <section className="mb-6 rounded-2xl border border-[#E9EBEF] bg-white p-5">
+        <h3 className="mb-3 text-lg font-bold text-[#14243A]">Support</h3>
+        <div className="space-y-2">
           <button
             type="button"
-            onClick={onReplayOnboarding}
-            className="w-full text-left flex items-start gap-3.5 hover:opacity-80 transition-opacity"
+            onClick={handleRefresh}
+            className="flex min-h-16 w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-[#F5F9FF]"
           >
-            <Sparkles className="w-5 h-5 text-[#0A84FF] shrink-0 mt-0.5" />
-            <div>
-              <h4 className="text-sm font-semibold text-white">Welcome & Setup Guide</h4>
-              <p className="text-xs text-[#8E8E93] mt-0.5">
-                View onboarding walkthrough and update license track
-              </p>
-            </div>
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+              <RefreshCw className={`h-5 w-5 ${refreshing ? 'animate-spin' : ''}`} />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-semibold text-[#14243A]">Refresh Questions</span>
+              <span className="mt-0.5 block text-xs leading-relaxed text-[#667085]">
+                Update your question database with latest content
+              </span>
+            </span>
+            <ChevronRight className="h-4 w-4 shrink-0 text-[#98A2B3]" />
           </button>
-        )}
-      </div>
+          <button
+            type="button"
+            onClick={() => setShowSupportModal(true)}
+            className="flex min-h-16 w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-[#F5F9FF]"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+              <Mail className="h-5 w-5" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-semibold text-[#14243A]">Contact Support</span>
+              <span className="mt-0.5 block text-xs leading-relaxed text-[#667085]">
+                Get help with issues or share your feedback
+              </span>
+            </span>
+            <ChevronRight className="h-4 w-4 shrink-0 text-[#98A2B3]" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowRatingModal(true)}
+            className="flex min-h-16 w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-[#F5F9FF]"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+              <Star className="h-5 w-5" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-semibold text-[#14243A]">Rate This App</span>
+              <span className="mt-0.5 block text-xs leading-relaxed text-[#667085]">
+                Help us improve by leaving a review
+              </span>
+            </span>
+            <ChevronRight className="h-4 w-4 shrink-0 text-[#98A2B3]" />
+          </button>
+          {onReplayOnboarding && (
+            <button
+              type="button"
+              onClick={onReplayOnboarding}
+              className="flex min-h-16 w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-[#F5F9FF]"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#0A84FF]">
+                <Sparkles className="h-5 w-5" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-semibold text-[#14243A]">Welcome &amp; Setup Guide</span>
+                <span className="mt-0.5 block text-xs leading-relaxed text-[#667085]">
+                  View onboarding walkthrough and update license track
+                </span>
+              </span>
+              <ChevronRight className="h-4 w-4 shrink-0 text-[#98A2B3]" />
+            </button>
+          )}
+        </div>
+      </section>
 
-      {/* Footer (Matches IMG_4108) */}
-      <div className="text-center text-xs text-[#8E8E93] pb-4 space-y-1">
-        <p>Made with ❤️ for Filipinos</p>
+      <div className="space-y-1 border-t border-[#E9EBEF] pt-5 pb-4 text-center text-xs text-[#667085]">
         <p>© 2026 EXAMORA</p>
       </div>
 
-      {/* Support / Contact Modal */}
       {showSupportModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
-          <div className="w-full max-w-md bg-[#1C1C1E] border border-[#2C2C2E] rounded-t-3xl sm:rounded-3xl p-6 text-white shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#2C2C2E] mb-4">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#0A84FF]" /> Contact Support
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#14243A]/55 p-0 backdrop-blur-sm sm:items-center sm:p-4">
+          <div role="dialog" aria-modal="true" aria-labelledby="support-title" className="w-full max-w-md rounded-t-3xl border border-[#BFDBFE] bg-white p-6 text-[#14243A] shadow-2xl sm:rounded-3xl">
+            <div className="mb-4 flex items-center justify-between border-b border-[#E9EBEF] pb-3">
+              <h3 id="support-title" className="flex items-center gap-2 text-base font-bold">
+                <Mail className="h-4 w-4 text-[#0A84FF]" /> Contact Support
               </h3>
               <button
                 type="button"
                 onClick={() => setShowSupportModal(false)}
-                className="w-8 h-8 rounded-full bg-[#2C2C2E] flex items-center justify-center text-[#8E8E93]"
+                aria-label="Close contact support"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#475569]"
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
             {supportSuccess ? (
-              <div className="text-center py-6 space-y-2">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6 stroke-[3]" />
+              <div className="space-y-2 py-6 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F0FDF4] text-[#15803D]">
+                  <Check className="h-6 w-6 stroke-[3]" />
                 </div>
-                <p className="text-sm font-bold text-white">Salamat! Feedback Sent.</p>
-                <p className="text-xs text-[#8E8E93]">We appreciate your review and suggestions.</p>
+                <p className="text-sm font-bold">Salamat! Feedback Sent.</p>
+                <p className="text-xs text-[#667085]">We appreciate your review and suggestions.</p>
               </div>
             ) : (
               <form onSubmit={handleSendSupport} className="space-y-4">
-                <p className="text-xs text-[#8E8E93]">
+                <p className="text-sm leading-relaxed text-[#475569]">
                   Have a question about an LTO exam topic or want to suggest a feature? Send us a quick note:
                 </p>
                 <textarea
@@ -277,13 +276,13 @@ export const AboutView: React.FC<AboutViewProps> = ({ onReplayOnboarding }) => {
                   value={supportMessage}
                   onChange={(e) => setSupportMessage(e.target.value)}
                   placeholder="Type your message here..."
-                  className="w-full bg-[#000000] border border-[#2C2C2E] rounded-2xl p-3 text-xs text-white placeholder-[#8E8E93] focus:outline-none focus:border-[#0A84FF]"
+                  className="w-full rounded-2xl border border-[#BFDBFE] bg-[#F8FAFC] p-3 text-sm text-[#14243A] placeholder-[#667085] focus:border-[#0A84FF] focus:outline-none focus:ring-2 focus:ring-[#0A84FF]/20"
                 />
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-2xl bg-[#0A84FF] text-white font-bold text-xs flex items-center justify-center gap-2"
+                  className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#0A84FF] py-3 text-sm font-bold text-white transition-colors hover:bg-[#006FE6]"
                 >
-                  <Send className="w-3.5 h-3.5" /> Submit Message
+                  <Send className="h-4 w-4" /> Submit Message
                 </button>
               </form>
             )}
@@ -291,48 +290,49 @@ export const AboutView: React.FC<AboutViewProps> = ({ onReplayOnboarding }) => {
         </div>
       )}
 
-      {/* Rate This App Modal */}
       {showRatingModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4">
-          <div className="w-full max-w-md bg-[#1C1C1E] border border-[#2C2C2E] rounded-t-3xl sm:rounded-3xl p-6 text-white text-center shadow-2xl">
-            <div className="flex justify-end mb-2">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#14243A]/55 p-0 backdrop-blur-sm sm:items-center sm:p-4">
+          <div role="dialog" aria-modal="true" aria-labelledby="rating-title" className="w-full max-w-md rounded-t-3xl border border-[#BFDBFE] bg-white p-6 text-center text-[#14243A] shadow-2xl sm:rounded-3xl">
+            <div className="mb-2 flex justify-end">
               <button
                 type="button"
                 onClick={() => setShowRatingModal(false)}
-                className="w-8 h-8 rounded-full bg-[#2C2C2E] flex items-center justify-center text-[#8E8E93]"
+                aria-label="Close rating"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#EFF6FF] text-[#475569]"
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
             {ratingSubmitted ? (
-              <div className="py-6 space-y-2">
-                <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-                  <Check className="w-6 h-6 stroke-[3]" />
+              <div className="space-y-2 py-6">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F0FDF4] text-[#15803D]">
+                  <Check className="h-6 w-6 stroke-[3]" />
                 </div>
-                <p className="text-sm font-bold text-white">Thank you for rating!</p>
-                <p className="text-xs text-[#8E8E93]">Your support helps us make this reviewer even better.</p>
+                <p id="rating-title" className="text-sm font-bold">Thank you for rating!</p>
+                <p className="text-xs text-[#667085]">Your support helps us make this reviewer even better.</p>
               </div>
             ) : (
               <>
-                <h3 className="text-lg font-bold text-white mb-1">Enjoying the Reviewer?</h3>
-                <p className="text-xs text-[#8E8E93] mb-5">
+                <h3 id="rating-title" className="mb-1 text-lg font-bold">Enjoying the Reviewer?</h3>
+                <p className="mb-5 text-sm text-[#667085]">
                   Tap a star to rate your exam preparation experience:
                 </p>
 
-                <div className="flex items-center justify-center gap-2 mb-6">
+                <div className="mb-6 flex items-center justify-center gap-2">
                   {[1, 2, 3, 4, 5].map((starVal) => (
                     <button
                       key={starVal}
                       type="button"
                       onClick={() => setRating(starVal)}
-                      className="p-1.5 transition-transform hover:scale-110 active:scale-95"
+                      aria-label={`${starVal} star${starVal === 1 ? '' : 's'}`}
+                      className="rounded-lg p-1.5 transition-transform hover:scale-110 active:scale-95"
                     >
                       <Star
-                        className={`w-8 h-8 ${
+                        className={`h-8 w-8 ${
                           starVal <= rating
-                            ? 'text-[#FF9500] fill-[#FF9500]'
-                            : 'text-[#38383A]'
+                            ? 'fill-[#F5A623] text-[#F5A623]'
+                            : 'text-[#CBD5E1]'
                         }`}
                       />
                     </button>
@@ -342,7 +342,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onReplayOnboarding }) => {
                 <button
                   type="button"
                   onClick={handleRate}
-                  className="w-full py-3.5 rounded-2xl bg-[#0A84FF] text-white font-bold text-xs shadow-lg shadow-[#0A84FF]/25"
+                  className="w-full rounded-xl bg-[#0A84FF] py-3.5 text-sm font-bold text-white shadow-md shadow-[#0A84FF]/20 transition-colors hover:bg-[#006FE6]"
                 >
                   Submit {rating} Star Rating
                 </button>

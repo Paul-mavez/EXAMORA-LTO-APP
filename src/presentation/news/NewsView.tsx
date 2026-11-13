@@ -1,166 +1,381 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Bell, BellOff, CalendarDays } from 'lucide-react';
 import {
-  Calendar,
-  ChevronRight,
-  ShieldCheck,
-  X,
-} from 'lucide-react';
-import { NEWS_ITEMS } from '../../data/local/reviewerDatabase';
-import { NewsItem } from '../../domain/model/reviewerModels';
+  DailyReminderSettings,
+  getTodayKey,
+  loadDailyReminderSettings,
+  saveDailyReminderSettings,
+} from '../../data/local/dailyPractice';
 
-export const NewsView: React.FC = () => {
-  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
-  const [activeFilter, setActiveFilter] = useState<string>('ALL');
+const TIME_WHEEL_ROW_HEIGHT = 44;
+const TIME_WHEEL_PADDING = 88;
+type TimeWheelSelection = { hour: number; minute: number; period: 'AM' | 'PM' };
 
-  const filters = ['ALL', 'Licensing Policy', 'Road Safety', 'Traffic Regulations', 'Law Enforcement'];
+const parseTime = (time: string): TimeWheelSelection => {
+  const [hour24, minute] = time.split(':').map(Number);
+  const validHour = Number.isFinite(hour24) ? hour24 : 19;
+  return {
+    hour: validHour % 12 || 12,
+    minute: Number.isFinite(minute) ? minute : 0,
+    period: validHour >= 12 ? 'PM' : 'AM',
+  };
+};
 
-  const filteredNews = NEWS_ITEMS.filter((item) => {
-    if (activeFilter === 'ALL') return true;
-    return item.category === activeFilter;
-  });
+const toStoredTime = ({ hour, minute, period }: TimeWheelSelection): string => {
+  const hour24 = (hour % 12) + (period === 'PM' ? 12 : 0);
+  return `${String(hour24).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+};
 
-  return (
-    <div className="w-full max-w-md mx-auto px-4 pt-10 pb-28 text-white min-h-screen">
-      {/* Title */}
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-3xl font-extrabold tracking-tight text-white">
-          News
-        </h1>
-        <span className="text-xs px-2.5 py-1 rounded-full bg-[#1C1C1E] border border-[#2C2C2E] text-[#8E8E93]">
-          Updated Daily
-        </span>
-      </div>
+interface TimeWheelPickerProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
-      {/* Filter Category Chips */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar">
-        {filters.map((filter) => {
-          const isActive = activeFilter === filter;
-          return (
-            <button
-              key={filter}
-              type="button"
-              onClick={() => setActiveFilter(filter)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                isActive
-                  ? 'bg-[#0A84FF] text-white shadow-sm shadow-[#0A84FF]/30'
-                  : 'bg-[#1C1C1E] text-[#8E8E93] border border-[#2C2C2E] hover:text-white'
-              }`}
-            >
-              {filter === 'ALL' ? 'All Updates' : filter}
-            </button>
-          );
-        })}
-      </div>
+const TimeWheelPicker: React.FC<TimeWheelPickerProps> = ({ value, onChange }) => {
+  const [selection, setSelection] = useState(() => parseTime(value));
+  const selectionRef = useRef(selection);
+  const hourRef = useRef<HTMLDivElement>(null);
+  const minuteRef = useRef<HTMLDivElement>(null);
+  const periodRef = useRef<HTMLDivElement>(null);
+  const commitTimerRef = useRef<number | null>(null);
+  const hourValues = Array.from({ length: 12 }, (_, index) => String(index + 1));
+  const minuteValues = Array.from({ length: 60 }, (_, index) => String(index).padStart(2, '0'));
+  const periodValues: TimeWheelSelection['period'][] = ['AM', 'PM'];
 
-      {/* Featured Banner */}
-      <div className="mb-5 p-4 rounded-3xl bg-linear-to-br from-[#0F223D] to-[#1C1C1E] border border-[#1F3E68] shadow-xl">
-        <div className="flex items-center gap-2 text-xs font-bold text-[#0A84FF] uppercase tracking-wider mb-2">
-          <ShieldCheck className="w-4 h-4" />
-          <span>Official LTO Policy Advisory</span>
-        </div>
-        <h3 className="text-base font-bold text-white mb-1.5">
-          10-Year Driver’s License Eligibility Criteria
-        </h3>
-        <p className="text-xs text-[#8E8E93] line-clamp-2 leading-relaxed mb-3">
-          Motorists with zero traffic violations during their 5-year validity cycle are rewarded with a 10-year validity license under RA 10930.
-        </p>
-        <button
-          type="button"
-          onClick={() => setSelectedNews(NEWS_ITEMS[0])}
-          className="text-xs text-[#0A84FF] font-semibold hover:underline flex items-center gap-1"
-        >
-          Read full advisory <ChevronRight className="w-3.5 h-3.5" />
-        </button>
-      </div>
+  useEffect(() => {
+    const nextSelection = parseTime(value);
+    selectionRef.current = nextSelection;
+    setSelection(nextSelection);
+    if (hourRef.current) hourRef.current.scrollTop = (nextSelection.hour - 1) * TIME_WHEEL_ROW_HEIGHT;
+    if (minuteRef.current) minuteRef.current.scrollTop = nextSelection.minute * TIME_WHEEL_ROW_HEIGHT;
+    if (periodRef.current) {
+      periodRef.current.scrollTop =
+        (nextSelection.period === 'PM' ? 1 : 0) * TIME_WHEEL_ROW_HEIGHT;
+    }
+  }, [value]);
 
-      {/* News Articles List */}
-      <div className="space-y-3.5">
-        {filteredNews.map((news) => (
+  useEffect(
+    () => () => {
+      if (commitTimerRef.current !== null) window.clearTimeout(commitTimerRef.current);
+    },
+    []
+  );
+
+  const commitSelection = (nextSelection: TimeWheelSelection) => {
+    selectionRef.current = nextSelection;
+    setSelection(nextSelection);
+    if (commitTimerRef.current !== null) window.clearTimeout(commitTimerRef.current);
+    commitTimerRef.current = window.setTimeout(
+      () => onChange(toStoredTime(selectionRef.current)),
+      180
+    );
+  };
+
+  const handleWheelScroll = (
+    column: 'hour' | 'minute' | 'period',
+    values: string[],
+    ref: React.RefObject<HTMLDivElement | null>
+  ) => {
+    const selectedIndex = Math.max(
+      0,
+      Math.min(values.length - 1, Math.round((ref.current?.scrollTop ?? 0) / TIME_WHEEL_ROW_HEIGHT))
+    );
+    const nextSelection = { ...selectionRef.current };
+    if (column === 'hour') nextSelection.hour = selectedIndex + 1;
+    if (column === 'minute') nextSelection.minute = selectedIndex;
+    if (column === 'period') nextSelection.period = periodValues[selectedIndex];
+    if (
+      nextSelection.hour !== selectionRef.current.hour ||
+      nextSelection.minute !== selectionRef.current.minute ||
+      nextSelection.period !== selectionRef.current.period
+    ) {
+      commitSelection(nextSelection);
+    }
+  };
+
+  const renderWheel = (
+    label: string,
+    values: string[],
+    selectedIndex: number,
+    ref: React.RefObject<HTMLDivElement | null>,
+    onScroll: () => void
+  ) => (
+    <div className="relative h-[220px] overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-[88px] z-0 h-11 rounded-xl bg-[#DBEAFE]" />
+      <div
+        ref={ref}
+        role="listbox"
+        aria-label={label}
+        tabIndex={0}
+        onScroll={onScroll}
+        className="relative z-10 h-full snap-y snap-mandatory overflow-y-auto overscroll-contain text-[#14243A] no-scrollbar"
+        style={{ paddingTop: TIME_WHEEL_PADDING, paddingBottom: TIME_WHEEL_PADDING }}
+      >
+        {values.map((item, index) => (
           <div
-            key={news.id}
-            onClick={() => setSelectedNews(news)}
-            className="p-4 rounded-3xl bg-[#1C1C1E] border border-[#2C2C2E] hover:border-[#3A3A3C] transition-all cursor-pointer group shadow-md"
+            key={`${label}-${item}`}
+            role="option"
+            aria-selected={index === selectedIndex}
+            className={`flex h-11 snap-center items-center justify-center text-[28px] tabular-nums transition-opacity ${
+              index === selectedIndex ? 'text-[#14243A] opacity-100' : 'text-[#98A2B3] opacity-70'
+            }`}
           >
-            <div className="flex items-center justify-between gap-2 mb-2">
-              <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#2C2C2E] text-[#0A84FF]">
-                {news.category}
-              </span>
-              <div className="flex items-center gap-1 text-[11px] text-[#8E8E93]">
-                <Calendar className="w-3 h-3" />
-                <span>{news.date}</span>
-              </div>
-            </div>
-
-            <h3 className="text-sm font-bold text-white group-hover:text-[#0A84FF] transition-colors leading-snug mb-1.5">
-              {news.title}
-            </h3>
-
-            <p className="text-xs text-[#8E8E93] line-clamp-2 leading-relaxed mb-3">
-              {news.summary}
-            </p>
-
-            <div className="flex items-center justify-between pt-2 border-t border-[#2C2C2E]/60 text-xs">
-              <span className="text-[#0A84FF] font-medium flex items-center gap-1">
-                Read memo <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-              <span className="text-[11px] text-[#8E8E93]">LTO Central Office</span>
-            </div>
+            {item}
           </div>
         ))}
       </div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[88px] bg-linear-to-b from-white to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[88px] bg-linear-to-t from-white to-transparent" />
+    </div>
+  );
 
-      {/* Article Detail Modal */}
-      {selectedNews && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in">
-          <div className="w-full max-w-md bg-[#1C1C1E] border border-[#2C2C2E] rounded-t-3xl sm:rounded-3xl p-6 text-white max-h-[85vh] overflow-y-auto shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#2C2C2E] mb-4">
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#0E2A47] text-[#0A84FF]">
-                {selectedNews.category}
-              </span>
-              <button
-                type="button"
-                onClick={() => setSelectedNews(null)}
-                className="w-8 h-8 rounded-full bg-[#2C2C2E] flex items-center justify-center text-[#8E8E93] hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
+  return (
+    <section
+      aria-label="Choose alarm time"
+      className="mt-5 overflow-hidden rounded-3xl border border-[#BFDBFE] bg-white p-3"
+    >
+      <div className="grid grid-cols-[1fr_1.2fr_1fr] items-center gap-1">
+        {renderWheel(
+          'Hour',
+          hourValues,
+          selection.hour - 1,
+          hourRef,
+          () => handleWheelScroll('hour', hourValues, hourRef)
+        )}
+        {renderWheel(
+          'Minute',
+          minuteValues,
+          selection.minute,
+          minuteRef,
+          () => handleWheelScroll('minute', minuteValues, minuteRef)
+        )}
+        {renderWheel(
+          'AM or PM',
+          periodValues,
+          selection.period === 'PM' ? 1 : 0,
+          periodRef,
+          () => handleWheelScroll('period', periodValues, periodRef)
+        )}
+      </div>
+    </section>
+  );
+};
 
-            <h2 className="text-lg font-bold text-white mb-2 leading-snug">
-              {selectedNews.title}
-            </h2>
+export const NewsView: React.FC = () => {
+  const [settings, setSettings] = useState<DailyReminderSettings>(loadDailyReminderSettings);
+  const [reminderVisible, setReminderVisible] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
 
-            <div className="flex items-center gap-2 text-xs text-[#8E8E93] mb-4">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{selectedNews.date}</span>
-              <span>•</span>
-              <span>Republic of the Philippines</span>
-            </div>
+  useEffect(() => {
+    const checkReminder = () => {
+      const today = getTodayKey();
+      const currentTime = new Date().toTimeString().slice(0, 5);
+      const currentDay = new Date().getDay();
+      if (
+        !settings.enabled ||
+        settings.repeatDays.length > 0 && !settings.repeatDays.includes(currentDay) ||
+        currentTime < settings.time ||
+        settings.lastReminderDate === today
+      ) {
+        return;
+      }
 
-            <div className="p-3.5 rounded-2xl bg-[#000000]/60 border border-[#2C2C2E] mb-4">
-              <p className="text-xs font-medium text-white italic">
-                "{selectedNews.summary}"
-              </p>
-            </div>
+      const updatedSettings = {
+        ...settings,
+        enabled: settings.repeatDays.length > 0,
+        lastReminderDate: today,
+      };
+      if (!saveDailyReminderSettings(updatedSettings)) {
+        setStatusMessage('Could not save the reminder state on this device.');
+        return;
+      }
+      setSettings(updatedSettings);
+      setReminderVisible(true);
 
-            <div className="text-xs text-[#D1D1D6] leading-relaxed space-y-3">
-              <p>{selectedNews.content}</p>
-              <p>
-                All student permit holders, non-professional drivers, and professional operators are strictly required to adhere to road safety guidelines, vehicle inspection protocols, and current traffic signs.
-              </p>
-            </div>
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+        try {
+          new Notification('Daily practice reminder', {
+            body: "It's time for your daily LTO practice.",
+          });
+        } catch {
+          setStatusMessage('The in-app reminder is ready, but the browser alert could not be shown.');
+        }
+      }
+    };
 
-            <div className="mt-6 pt-4 border-t border-[#2C2C2E] flex items-center justify-between">
-              <p className="text-[11px] text-[#8E8E93]">Examora Educational Bulletin</p>
-              <button
-                type="button"
-                onClick={() => setSelectedNews(null)}
-                className="px-4 py-2 rounded-xl bg-[#0A84FF] text-white text-xs font-bold"
-              >
-                Close
-              </button>
-            </div>
+    checkReminder();
+    const timerId = window.setInterval(checkReminder, 30_000);
+    return () => window.clearInterval(timerId);
+  }, [settings]);
+
+  const updateSettings = (updates: Partial<DailyReminderSettings>): boolean => {
+    const updatedSettings = { ...settings, ...updates };
+    if (!saveDailyReminderSettings(updatedSettings)) {
+      setStatusMessage('Could not save your reminder settings on this device.');
+      return false;
+    }
+    setSettings(updatedSettings);
+    setStatusMessage('');
+    if (!updatedSettings.enabled) setReminderVisible(false);
+    return true;
+  };
+
+  const toggleRepeatDay = (day: number) => {
+    const repeatDays = settings.repeatDays.includes(day)
+      ? settings.repeatDays.filter((selectedDay) => selectedDay !== day)
+      : [...settings.repeatDays, day];
+    updateSettings({ repeatDays });
+  };
+
+  const weekDays = [
+    { short: 'S', name: 'Sunday' },
+    { short: 'M', name: 'Monday' },
+    { short: 'T', name: 'Tuesday' },
+    { short: 'W', name: 'Wednesday' },
+    { short: 'T', name: 'Thursday' },
+    { short: 'F', name: 'Friday' },
+    { short: 'S', name: 'Saturday' },
+  ];
+
+  const repeatSummary =
+    settings.repeatDays.length === 0
+      ? 'Never'
+      : settings.repeatDays.length === 7
+        ? 'Every day'
+        : settings.repeatDays
+            .slice()
+            .sort((left, right) => left - right)
+            .map((day) => weekDays[day].name.slice(0, 3))
+            .join(', ');
+
+  const toggleReminder = async () => {
+    if (settings.enabled) {
+      if (updateSettings({ enabled: false })) {
+        setReminderVisible(false);
+        setStatusMessage('Daily reminder turned off.');
+      }
+      return;
+    }
+
+    let message = 'Daily reminder turned on.';
+    if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          message = 'Reminder saved. Allow browser notifications to receive alerts.';
+        }
+      } catch {
+        message = 'Reminder saved, but browser notifications are unavailable.';
+      }
+    } else if (typeof Notification === 'undefined' || Notification.permission === 'denied') {
+      message = 'Reminder saved. Allow browser notifications to receive alerts.';
+    }
+
+    if (updateSettings({ enabled: true })) setStatusMessage(message);
+  };
+
+  const formattedTime = (() => {
+    const [hour, minute] = settings.time.split(':').map(Number);
+    const time = new Date();
+    time.setHours(hour, minute, 0, 0);
+    return new Intl.DateTimeFormat(undefined, {
+      hour: 'numeric',
+      minute: '2-digit',
+    }).format(time);
+  })();
+
+  return (
+    <div className="w-full max-w-md mx-auto px-4 pt-8 pb-32 min-h-screen text-[#14243A]">
+      <div className="mb-6">
+        <p className="mb-1 text-xs font-bold uppercase tracking-[0.16em] text-[#0A84FF]">
+          Daily alarm
+        </p>
+        <h1 className="font-display text-3xl font-bold tracking-tight text-[#14243A]">
+          Practice reminder
+        </h1>
+        <p className="mt-1 text-sm text-[#667085]">
+          Set a time for Examora to remind you to practice.
+        </p>
+      </div>
+
+      <section className="rounded-3xl border border-[#BFDBFE] bg-white p-5 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#DBEAFE] text-[#0A84FF]">
+            {settings.enabled ? <Bell className="h-5 w-5" /> : <BellOff className="h-5 w-5" />}
           </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-bold text-[#14243A]">Alarm</p>
+            <p className="text-xs text-[#667085]">
+              {settings.enabled ? 'On' : 'Off'}
+            </p>
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-label="Enable daily practice reminder"
+            aria-checked={settings.enabled}
+            onClick={toggleReminder}
+            className={`h-7 w-12 shrink-0 rounded-full p-1 transition-colors ${
+              settings.enabled ? 'bg-[#32845A]' : 'bg-[#CBD5E1]'
+            }`}
+          >
+            <span
+              className={`block h-5 w-5 rounded-full bg-white transition-transform ${
+                settings.enabled ? 'translate-x-5' : 'translate-x-0'
+              }`}
+            />
+          </button>
+        </div>
+
+        <p className="mb-2 mt-5 text-xs font-semibold uppercase tracking-wide text-[#667085]">
+          Alarm time · {formattedTime}
+        </p>
+        <TimeWheelPicker
+          value={settings.time}
+          onChange={(time) => updateSettings({ time })}
+        />
+
+        <div className="mt-3 rounded-2xl border border-[#E9EBEF] px-4 py-4">
+          <div className="flex items-center justify-between gap-2">
+            <span className="flex items-center gap-2 text-sm font-medium text-[#475569]">
+              <CalendarDays className="h-4 w-4 text-[#0A84FF]" />
+              Repeat
+            </span>
+            <span className="text-sm font-semibold text-[#14243A]">{repeatSummary}</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-1 border-t border-[#E9EBEF] pt-3">
+            {weekDays.map((day, index) => {
+              const selected = settings.repeatDays.includes(index);
+              return (
+                <button
+                  key={day.name}
+                  type="button"
+                  aria-label={day.name}
+                  aria-pressed={selected}
+                  onClick={() => toggleRepeatDay(index)}
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+                    selected
+                      ? 'bg-[#0A84FF] text-white'
+                      : 'bg-[#EEF0F4] text-[#667085] hover:bg-[#DBEAFE]'
+                  }`}
+                >
+                  {day.short}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {statusMessage && (
+          <p role="status" className="mt-3 text-xs font-medium text-[#475569]">
+            {statusMessage}
+          </p>
+        )}
+      </section>
+
+      {reminderVisible && (
+        <div className="mt-4 rounded-2xl border border-[#F5D99A] bg-[#FFFAEB] p-4">
+          <p className="text-sm font-semibold text-[#7A4B00]">Time for your daily practice</p>
         </div>
       )}
     </div>

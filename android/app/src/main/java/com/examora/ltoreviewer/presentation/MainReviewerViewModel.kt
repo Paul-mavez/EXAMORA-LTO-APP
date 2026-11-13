@@ -48,6 +48,10 @@ class MainReviewerViewModel(
         viewModelScope.launch { repository.setReplayOnboarding() }
     }
 
+    fun updateSettings(transform: (UserSettings) -> UserSettings) {
+        viewModelScope.launch { repository.updateSettings(transform) }
+    }
+
     fun submitQuestion(question: Question, selectedChoiceId: String) {
         viewModelScope.launch {
             repository.recordQuestionAnswer(

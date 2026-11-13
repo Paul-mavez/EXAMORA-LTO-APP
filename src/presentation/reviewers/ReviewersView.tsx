@@ -16,6 +16,8 @@ import { ReviewerCategory } from '../../domain/model/reviewerModels';
 import { CategoryBadge } from '../../ui/components/CategoryBadge';
 import { RoadSignIllustration } from '../../ui/components/RoadSignIllustration';
 
+const SHOW_STUDY_SESSION_BANNER = false;
+
 export const ReviewersView: React.FC = () => {
   // View states: 'CATEGORY_LIST' | 'STUDY_SESSION'
   const [activeCategory, setActiveCategory] = useState<ReviewerCategory | null>(null);
@@ -31,6 +33,7 @@ export const ReviewersView: React.FC = () => {
   const [secondsRemaining, setSecondsRemaining] = useState<number>(58 * 60 + 24);
 
   useEffect(() => {
+    if (!SHOW_STUDY_SESSION_BANNER) return;
     const timer = setInterval(() => {
       setSecondsRemaining((prev) => (prev > 0 ? prev - 1 : 60 * 60));
     }, 1000);
@@ -125,7 +128,7 @@ export const ReviewersView: React.FC = () => {
         </div>
 
         {/* Categories Grouped Container */}
-        <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-3xl overflow-hidden divide-y divide-[#2C2C2E]/70 shadow-2xl">
+        <div className="overflow-hidden rounded-3xl border border-[#E9EBEF] bg-white shadow-sm divide-y divide-[#E9EBEF]">
           {filteredCategories.map((cat) => (
             <button
               key={cat.id}
@@ -134,25 +137,25 @@ export const ReviewersView: React.FC = () => {
                 setActiveCategory(cat);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="w-full p-4 text-left flex items-center justify-between gap-3.5 hover:bg-[#2C2C2E]/40 active:bg-[#2C2C2E]/60 transition-colors group"
+              className="group flex w-full items-center justify-between gap-3.5 p-4 text-left transition-colors hover:bg-[#F5F9FF] active:bg-[#EFF6FF]"
             >
               <div className="flex items-center gap-3.5 min-w-0">
                 <CategoryBadge type={cat.iconType} size="md" />
                 <div className="min-w-0">
-                  <h3 className="text-base font-semibold text-white group-hover:text-[#0A84FF] transition-colors truncate">
+                  <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug text-[#14243A] transition-colors group-hover:text-[#0A84FF]">
                     {cat.title}
                   </h3>
-                  <p className="text-xs text-[#8E8E93] line-clamp-1 mt-0.5">
+                  <p className="mt-0.5 line-clamp-1 text-xs text-[#667085]">
                     {cat.subtitle}
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs text-[#0A84FF] font-medium mt-1">
+                  <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-[#0A84FF]">
                     <HelpCircle className="w-3.5 h-3.5 shrink-0" />
                     <span>{cat.questionCount} questions</span>
                   </div>
                 </div>
               </div>
 
-              <ChevronRight className="w-5 h-5 text-[#8E8E93] shrink-0 group-hover:translate-x-0.5 transition-transform" />
+              <ChevronRight className="h-5 w-5 shrink-0 text-[#98A2B3] transition-transform group-hover:translate-x-0.5" />
             </button>
           ))}
         </div>
@@ -217,47 +220,51 @@ export const ReviewersView: React.FC = () => {
         )}
       </div>
 
-      {/* STUDY SESSION ACTIVE BANNER (Matches IMG_4104 & IMG_4105) */}
-      <div className="mb-5 p-3.5 rounded-2xl bg-[#1C1408] border border-[#3E2911] flex items-center justify-between shadow-lg">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-[#3B2206] text-[#FF9500] flex items-center justify-center shrink-0 border border-[#683C0B]/60">
-            <Clock className="w-5 h-5" />
-          </div>
-          <div>
-            <p className="text-[11px] font-bold tracking-wider text-[#A3733A] uppercase">
-              STUDY SESSION ACTIVE
-            </p>
-            <p className="text-sm font-bold text-[#FF9500]">
-              Expires in {formatTimer(secondsRemaining)}
-            </p>
-          </div>
-        </div>
+      {SHOW_STUDY_SESSION_BANNER && (
+        <>
+          {/* Enable this banner when the ads feature is ready. */}
+          <div className="mb-5 p-3.5 rounded-2xl bg-[#1C1408] border border-[#3E2911] flex items-center justify-between shadow-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-[#3B2206] text-[#FF9500] flex items-center justify-center shrink-0 border border-[#683C0B]/60">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-[11px] font-bold tracking-wider text-[#A3733A] uppercase">
+                  STUDY SESSION ACTIVE
+                </p>
+                <p className="text-sm font-bold text-[#FF9500]">
+                  Expires in {formatTimer(secondsRemaining)}
+                </p>
+              </div>
+            </div>
 
-        {/* Circular Countdown Progress Ring */}
-        <div className="relative w-8 h-8 shrink-0 flex items-center justify-center">
-          <svg className="w-8 h-8 -rotate-90" viewBox="0 0 36 36">
-            <circle
-              cx="18"
-              cy="18"
-              r="14"
-              fill="none"
-              stroke="#3B2206"
-              strokeWidth="3.5"
-            />
-            <circle
-              cx="18"
-              cy="18"
-              r="14"
-              fill="none"
-              stroke="#FF9500"
-              strokeWidth="3.5"
-              strokeDasharray="88"
-              strokeDashoffset={`${88 - (secondsRemaining / 3600) * 88}`}
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-      </div>
+            {/* Circular Countdown Progress Ring */}
+            <div className="relative w-8 h-8 shrink-0 flex items-center justify-center">
+              <svg className="w-8 h-8 -rotate-90" viewBox="0 0 36 36">
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="14"
+                  fill="none"
+                  stroke="#3B2206"
+                  strokeWidth="3.5"
+                />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="14"
+                  fill="none"
+                  stroke="#FF9500"
+                  strokeWidth="3.5"
+                  strokeDasharray="88"
+                  strokeDashoffset={`${88 - (secondsRemaining / 3600) * 88}`}
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Header Row: Questions count + Show All / Hide All pill button */}
       <div className="flex items-center justify-between mb-4">

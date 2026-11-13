@@ -52,6 +52,9 @@ class UserPreferencesDataStore(private val context: Context) {
         val TRACK = stringPreferencesKey("prep_track")
         val DISPLAY_NAME = stringPreferencesKey("display_name")
         val DAILY_GOAL = intPreferencesKey("daily_goal")
+        val REMINDER_HOUR = intPreferencesKey("reminder_hour")
+        val REMINDER_MINUTE = intPreferencesKey("reminder_minute")
+        val REMINDER_DAYS = stringPreferencesKey("reminder_days")
         val DARK_THEME = stringPreferencesKey("dark_theme_mode")
         val NOTIFICATIONS = booleanPreferencesKey("notifications_enabled")
         val SOUND = booleanPreferencesKey("sound_enabled")
@@ -66,12 +69,19 @@ class UserPreferencesDataStore(private val context: Context) {
             }.getOrDefault(PreparationTrack.NON_PROFESSIONAL),
             displayName = prefs[Keys.DISPLAY_NAME] ?: "",
             dailyGoal = prefs[Keys.DAILY_GOAL] ?: 20,
+            reminderHour = (prefs[Keys.REMINDER_HOUR] ?: 19).coerceIn(0, 23),
+            reminderMinute = (prefs[Keys.REMINDER_MINUTE] ?: 0).coerceIn(0, 59),
+            reminderDays = prefs[Keys.REMINDER_DAYS]
+                ?.split(',')
+                ?.mapNotNull { it.toIntOrNull()?.takeIf { day -> day in 0..6 } }
+                ?.toSet()
+                ?: setOf(0, 1, 2, 3, 4, 5, 6),
             darkTheme = when (prefs[Keys.DARK_THEME]) {
                 "DARK" -> true
                 "LIGHT" -> false
                 else -> null
             },
-            notificationsEnabled = prefs[Keys.NOTIFICATIONS] ?: true,
+            notificationsEnabled = prefs[Keys.NOTIFICATIONS] ?: false,
             soundEnabled = prefs[Keys.SOUND] ?: true
         )
     }
@@ -83,6 +93,12 @@ class UserPreferencesDataStore(private val context: Context) {
             prefs[Keys.TRACK] = settings.preparationTrack.name
             prefs[Keys.DISPLAY_NAME] = settings.displayName
             prefs[Keys.DAILY_GOAL] = settings.dailyGoal
+            prefs[Keys.REMINDER_HOUR] = settings.reminderHour.coerceIn(0, 23)
+            prefs[Keys.REMINDER_MINUTE] = settings.reminderMinute.coerceIn(0, 59)
+            prefs[Keys.REMINDER_DAYS] = settings.reminderDays
+                .filter { it in 0..6 }
+                .sorted()
+                .joinToString(",")
             prefs[Keys.DARK_THEME] = when (settings.darkTheme) {
                 true -> "DARK"
                 false -> "LIGHT"

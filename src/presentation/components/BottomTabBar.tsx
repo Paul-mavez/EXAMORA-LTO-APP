@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Gamepad2, Info, Newspaper } from 'lucide-react';
+import { Bell, BookOpen, Gamepad2, Info } from 'lucide-react';
 
 export type AppTab = 'QUIZ' | 'REVIEWERS' | 'NEWS' | 'ABOUT';
 
@@ -22,8 +22,8 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({ activeTab, onSelectT
     },
     {
       id: 'NEWS',
-      label: 'News',
-      icon: <Newspaper className="w-5 h-5" />,
+      label: 'Reminder',
+      icon: <Bell className="w-5 h-5" />,
     },
     {
       id: 'ABOUT',

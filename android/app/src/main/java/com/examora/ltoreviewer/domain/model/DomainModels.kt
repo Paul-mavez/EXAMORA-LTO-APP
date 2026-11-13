@@ -101,7 +101,10 @@ data class UserSettings(
     val preparationTrack: PreparationTrack = PreparationTrack.NON_PROFESSIONAL,
     val displayName: String = "",
     val dailyGoal: Int = 20,
+    val reminderHour: Int = 19,
+    val reminderMinute: Int = 0,
+    val reminderDays: Set<Int> = setOf(0, 1, 2, 3, 4, 5, 6),
     val darkTheme: Boolean? = null,
-    val notificationsEnabled: Boolean = true,
+    val notificationsEnabled: Boolean = false,
     val soundEnabled: Boolean = true
 )
